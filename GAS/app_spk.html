@@ -1,0 +1,867 @@
+<!-- Modal Add RAB -->
+<div class="modal fade" id="spkModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa-solid fa-file-invoice-dollar"></i>&nbsp;Buat SPK Baru</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <div class="accordion accordion-flush" id="accordionFlushSpk">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed px-1 py-1 mb-1 fs-5 text-success fw-bolder"
+                        type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                        aria-expanded="false" aria-controls="flush-collapseOne">
+                        <i class="fa-solid fa-file-invoice"></i>&nbsp;Dasar Dokumen Transaksi
+                      </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushSpk">
+                      <div class="accordion-body">
+                        <div class="row g-3 align-items-center">
+                          <div class="col-3">
+                            <label for="inputData01" class="col-form-label">Nama Rekanan</label>
+                          </div>
+                          <div class="col-9">
+                            <input type="text" id="inputData01" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row g-3 align-items-center pt-1">
+                          <div class="col-3">
+                            <label for="inputData02" class="col-form-label">Nama Perjanjian</label>
+                          </div>
+                          <div class="col-9">
+                            <input type="text" id="inputData02" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row g-3 align-items-center pt-1">
+                          <div class="col-3">
+                            <label for="inputData03" class="col-form-label">Nomor Perjanjian</label>
+                          </div>
+                          <div class="col-auto">
+                            <input type="text" id="inputData03" class="form-control">
+                          </div>
+                          <div class="col-auto">
+                            <label for="inputData13" class="col-form-label">Tanggal</label>
+                          </div>
+                          <div class="col-auto">
+                            <input type="date" id="inputData13" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row g-3 align-items-center pt-1">
+                          <div class="col-3">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="switchinputData04">
+                              <label class="form-check-label" for="switchCheckDefault">Addendum I</label>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <input type="text" id="inputData04" class="form-control">
+                          </div>
+                          <div class="col-auto">
+                            <label for="inputData14" class="col-form-label">Tanggal</label>
+                          </div>
+                          <div class="col-auto">
+                            <input type="date" id="inputData14" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row g-3 align-items-center pt-1">
+                          <div class="col-3">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="switchinputData05">
+                              <label class="form-check-label" for="switchCheckDefault">Addendum II</label>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <input type="text" id="inputData05" class="form-control">
+                          </div>
+                          <div class="col-auto">
+                            <label for="inputData15" class="col-form-label">Tanggal</label>
+                          </div>
+                          <div class="col-auto">
+                            <input type="date" id="inputData15" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row g-3 align-items-center pt-1">
+                          <div class="col-3">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="switchinputData06">
+                              <label class="form-check-label" for="switchCheckDefault">Addendum III</label>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <input type="text" id="inputData06" class="form-control">
+                          </div>
+                          <div class="col-auto">
+                            <label for="inputData16" class="col-form-label">Tanggal</label>
+                          </div>
+                          <div class="col-auto">
+                            <input type="date" id="inputData16" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row g-3 align-items-center pt-1">
+                          <div class="col-3">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="switchinputData07">
+                              <label class="form-check-label" for="switchCheckDefault">Addendum IV</label>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <input type="text" id="inputData07" class="form-control">
+                          </div>
+                          <div class="col-auto">
+                            <label for="inputData17" class="col-form-label">Tanggal</label>
+                          </div>
+                          <div class="col-auto">
+                            <input type="date" id="inputData17" class="form-control">
+                          </div>
+                        </div>
+                        <div class="row g-3 align-items-center pt-1">
+                          <div class="col-3">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="switchinputData08">
+                              <label class="form-check-label" for="switchCheckDefault">Addendum V</label>
+                            </div>
+                          </div>
+                          <div class="col-auto">
+                            <input type="text" id="inputData08" class="form-control">
+                          </div>
+                          <div class="col-auto">
+                            <label for="inputData18" class="col-form-label">Tanggal</label>
+                          </div>
+                          <div class="col-auto">
+                            <input type="date" id="inputData18" class="form-control">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <h5 class="card-title">Service Kendaraan</h5>
+              </div>
+              <div class="col-6">
+                <div class="row">
+                  <label for="staticEmail" class="col-sm-6 col-form-label">Nomor RAB</label>
+                  <div class="col-sm-6">
+                    <input type="text" list="datalistRabOptions" class="form-control" id="staticRab"
+                      placeholder="Masukan No dari RAB" />
+                    <datalist id="datalistRabOptions"></datalist>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="row mt-1">
+                  <label for="keterangan" class="col-sm-4 col-form-label">Service : </label>
+                  <div class="col-sm-8">
+                    <textarea type="text" class="form-control" id="keterangan" placeholder=""
+                      style="height: 150px"></textarea>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="row mt-1">
+                  <label for="jenis_kr" class="col-sm-6 col-form-label">Jenis
+                    Kendaraan</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id="jenis_kr" placeholder="Jenis/Merk Kendaraan" />
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <label for="plat_kr" class="col-sm-6 col-form-label">Nomor Kendaraan</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id="plat_kr" placeholder="Nopol Kendaraan" />
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <label for="no_mesin" class="col-sm-6 col-form-label">Nomor Mesin</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id="no_mesin" placeholder="" />
+                  </div>
+                </div>
+                <div class="row mt-1">
+                  <label for="no_rangka" class="col-sm-6 col-form-label">Nomor Rangka</label>
+                  <div class="col-sm-6">
+                    <input type="text" class="form-control" id="no_rangka" placeholder="" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="hr">
+            <div class="row mt-2">
+              <div class="col-sm-6">
+                <div class="row mb-1">
+                  <label for="tanggal_spk" class="col-sm-4 col-form-label">Tanggal SPK</label>
+                  <div class="col-sm-8">
+                    <input type="date" class="form-control" id="tanggal_spk">
+                  </div>
+                </div>
+                <div class="row">
+                  <label for="no_spk" class="col-sm-4 col-form-label">Nomor SPK</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="no_spk" placeholder="XXX/AIS-JOMO/XX/XXXX">
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <button type="button" class="btn btn-danger float-end" id="btnCreateSPK"><i
+                    class="fa-solid fa-file-signature"></i>&nbsp;Buat SPK</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div id="spmkContent"
+          style="font-family:Calibri, sans-serif; font-size:11pt; padding: 2.5cm 2.5cm 1.5cm 2.6cm; width: 210mm; max-width: 210mm;display:none">
+          <br />
+          <div style="text-align:right;" id="itanggal_spk">Jombang, 01 Juli 2022</div>
+          <div class="row">
+            <div class="col-2">Nomor</div>
+            <div class="col-10" id="ino_spk">: 137/AIS-JOMO/VII/2022</div>
+          </div>
+          <div class="row">
+            <div class="col-2">Lampiran</div>
+            <div class="col-10">: 1 (satu) lembar</div>
+          </div>
+          <br /><br />
+          <div class="row">
+            <div class="col-12">
+
+              Kepada Yth.
+              <div class="fw-bold">PT. Astra International Tbk - Isuzu Sales Operations</div>
+              Alamat : Jl. HR. Muhammad No.kav 8-10 Surabaya Jawa Timur 60226
+            </div>
+          </div>
+          <br />
+          <p class="fw-bold mb-0">Perihal : Surat Perintah Kerja ("SPK")</p>
+          <br />
+          <div class="row">
+            <p class="col-12 text-justify" style="text-align: justify;">
+              Dengan hormat,
+
+              Sesuai dengan Perjanjian Kerja Sama dengan No<span class="fw-bold" id="ino_pks">[################]</span>
+              tanggal <span class="fw-bold" id="itanggal_pks">[################]</span>, Adendum 1 No<span
+                class="fw-bold" id="ino_add1">[################]</span> tanggal <span class="fw-bold"
+                id="itanggal_add1">[################]</span> dan Adendum 2 No<span class="fw-bold"
+                id="ino_add2">[################]</span> tanggal <span class="fw-bold"
+                id="itanggal_add2">[################]</span> perihal <span class="fw-bold"
+                id="inama_pekerjaan">[################]</span>, bersama ini kami instruksikan kepada <span
+                class="fw-bold">PT. Astra International Tbk - Isuzu Sales Operations Cabang HR Muhammad</span> untuk
+              segera memulai pekerjaan Pekerjaan Service kendaraan sebagai berikut:
+            </p>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">Jenis Kendaraan</div>
+            <div class="col-5" id="ijenis_kr">: [##########]</div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">No. Polisi</div>
+            <div class="col-5" id="iplat_kr">: [##########]</div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">No. Mesin</div>
+            <div class="col-5" id="ino_mesin">: [##########]</div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">No. Rangka</div>
+            <div class="col-5" id="ino_rangka">: [##########]</div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">Service</div>
+            <div class="col-5" id="iketerangan">: [##########]</div>
+            <div class="col-2"></div>
+          </div>
+          <div class="row mt-3">
+
+            <p class="col-12 text-justify">Demikian atas bantuan dan kerjasamanya kami ucapkan terima kasih.</p>
+            <p class="col-12 text-justify">Hormat kami,</p>
+            <p class="col-12 text-justify fw-bold">PT ASTRA TOL NUSANTARA<br /><span>ASTRA INFRA SOLUTIONS</span></p>
+            <p class="col-12 text-justify fw-bold text-decoration-underline mt-5 mb-0">Ervan Pantja D</p>
+            <p class="col-12 text-justify ">Area Manager</p>
+          </div>
+          <br />
+          <p>Tembusan :<br />1. Arsip</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="d-flex mb-3 placeholder-grow">
+    <h2 onclick="ActiveMenu('app_spk')" class="placeholder">
+      <i class="fa-solid fa-file-invoice"></i>
+      &nbsp;SPK atas RAB Perbaikan
+    </h2>
+    <div class="ms-auto">
+      <button type="button" class="btn btn-success placeholder" onclick="$('#spkModal').modal('show')"><i
+          class="fa-solid fa-receipt"></i>&nbsp;Tambah SPK</button>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body placeholder-grow">
+      <div class="table-responsive placeholder">
+        <table id="tableRABForSPK" class="table table-bordered table-hover w-100">
+          <thead class="table-light">
+            <tr>
+              <th>No</th>
+              <th>Tanggal SPK</th>
+              <th>No SPK</th>
+              <th>Keterangan</th>
+              <th>Status RAB</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  console.clear()
+  showLoadingScreen("Memuat Data dari Server ... ");
+
+  /**
+ * Mengambil data laporan RAB dan kendaraan dari server (GAS) untuk digunakan pada datalist dan tampilan tabel SPK.
+ *
+ * @param {string|null} statusFilter - (Opsional) Filter berdasarkan status, saat ini belum digunakan.
+ * @returns {void}
+ *
+ * @fires google.script.run.getSPKRab
+ * @fires google.script.run.getVehicles
+ */
+  function fetchRABFiltered(statusFilter = null) {
+    showLoadingScreen("Menyegarkan Table ... ");
+    google.script.run.withSuccessHandler(function (data) {
+      data_laporan = JSON.parse(data);
+      viewLog && console.warn('data_laporan', data_laporan);
+
+      const $datalist = $("#datalistRabOptions");
+      $datalist.empty();
+
+      data_laporan.forEach(item => {
+        $("<option>").val(item.no_rab).appendTo($datalist);
+      });
+
+      // Ambil data kendaraan
+      google.script.run.withSuccessHandler(function (data) {
+        data_vehicles = JSON.parse(data);
+        viewLog && console.warn('data_vehicles', data_vehicles);
+        showLoadingScreen("Menyegarkan Table ... ");
+        loadRABForSPK();
+      })
+        .withFailureHandler(function (err) {
+          console.error("Gagal memuat data kendaraan:", err.message);
+          Swal.fire("Gagal", "Tidak bisa memuat data kendaraan.", "error");
+        })
+        .getVehicles();
+
+    })
+      .withFailureHandler(function (err) {
+        console.error("Gagal memuat data laporan:", err.message);
+        Swal.fire("Gagal", "Tidak bisa memuat data laporan.", "error");
+      })
+      .getSPKRab();
+  }
+
+  /**
+   * Mengambil dan menampilkan daftar RAB untuk pembuatan atau pengelolaan SPK.
+   *
+   * Filter:
+   * - Hanya data yang belum dihapus (`!deleted`)
+   * - Memiliki nomor dan referensi RAB yang valid
+   *
+   * Menampilkan data ke tabel `#tableRABForSPK` dengan aksi Upload, Link PDF, dan Hapus.
+   *
+   * @returns {void}
+   *
+   * @fires google.script.run.getNoSPKList
+   */
+  function loadRABForSPK() {
+    showLoadingScreen("Menyegarkan Table ... ");
+
+    google.script.run.withSuccessHandler(function (response) {
+      const data = JSON.parse(response);
+
+      const filtered = data.filter(item => {
+        return !item.deleted && item.no_rab && item.ref_rab;
+      });
+
+      viewLog && console.warn('data', data);
+      viewLog && console.warn('filtered', filtered);
+
+      if ($.fn.DataTable.isDataTable("#tableRABForSPK")) {
+        $("#tableRABForSPK").DataTable().clear().destroy();
+      }
+
+      $("#tableRABForSPK").DataTable({
+        data: filtered,
+        columns: [
+          { data: null, render: (data, type, row, meta) => meta.row + 1, title: "#" },
+          {
+            data: "tanggal_spk",
+            title: "Tanggal",
+            render: data => new Date(data).toLocaleDateString("id-ID")
+          },
+          { data: "no_spk", title: "No. SPK" },
+          { data: "keterangan", title: "Keterangan" },
+          { data: "status_spk", title: "Status" },
+          {
+            data: null,
+            title: "Aksi",
+            render: (data, type, row) => {
+              const uploadButton = !row.ref_spk || row.ref_spk.trim() === ""
+                ? `
+                <label class="btn btn-sm btn-info uploadSPKFile" title="Upload SPK File">
+                  <i class="fa-solid fa-file-arrow-up"></i>
+                  <input type="file" accept="application/pdf" class="d-none spk-file-input" data-nospk="${row.no_spk}" />
+                </label>`
+                : "";
+
+              const pdfButton = row.ref_spk && row.ref_spk.trim() !== ""
+                ? `<a href="${row.ref_spk}" class="input-group-text text-warning ref_rab" target="_blank" rel="noopener noreferrer">
+                  <i class="fa-regular fa-file-pdf"></i></a>`
+                : "";
+
+              return `
+              <div class="btn-group" role="group">
+                ${uploadButton}
+                ${pdfButton}
+                <button class="btn btn-sm btn-danger deleteSPK" title="Hapus" data-nospk="${row.no_spk}">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>`;
+            }
+          }
+        ],
+        responsive: true,
+        language: {
+          emptyTable: "Tidak ada data RAB yang memenuhi syarat."
+        }
+      });
+
+      loadInfoSPKToForm();
+
+    }).getNoSPKList();
+  }
+
+  /**
+   * Handler untuk tombol hapus SPK.
+   *
+   * - Konfirmasi melalui SweetAlert.
+   * - Jika disetujui, memanggil server GAS untuk menghapus berdasarkan `no_spk`.
+   * - Setelah berhasil, memuat ulang tabel RAB untuk SPK.
+   *
+   * @event click
+   * @returns {void}
+   */
+  $(document).on('click', '.deleteSPK', function () {
+    const no_spk = $(this).data("nospk");
+    Swal.fire({
+      title: 'Yakin ingin menghapus SPK?',
+      text: `No SPK: ${no_spk}`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Hapus!',
+      cancelButtonText: 'Batal'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        showLoadingScreen("Menghapus SPK ...");
+        google.script.run.withSuccessHandler(function (response) {
+          Swal.fire('Berhasil!', response, 'success');
+          loadRABForSPK(); // Refresh tabel
+        }).deleteSPKByNo(no_spk);
+      }
+    });
+  });
+
+  /**
+   * Inisialisasi awal saat DOM siap.
+   * Memanggil `fetchRABFiltered` untuk mengisi data awal.
+   *
+   * @event ready
+   * @returns {void}
+   */
+  $(document).ready(function () {
+    fetchRABFiltered();
+  });
+
+  /**
+   * Handler untuk unggah file PDF SPK.
+   *
+   * - Validasi tipe file (harus PDF)
+   * - Membaca file sebagai Base64
+   * - Kirim file ke GAS untuk disimpan ke Google Drive
+   * - Setelah berhasil, set URL file ke kolom `ref_spk` di sheet
+   *
+   * @event change
+   * @returns {void}
+   *
+   * @fires google.script.run.uploadPdfAndSetReference
+   */
+  $(document).on('change', '.spk-file-input', function () {
+    const no_spk = $(this).data('nospk');
+    const file = this.files[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      Swal.fire("Hanya file PDF yang diperbolehkan!", "", "warning");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64Data = e.target.result;
+      const fileName = formatDateToYYYYMMDD(new Date()) + " " + no_spk;
+
+      viewLog && console.warn('fileName', fileName);
+
+      const targetSheet = "reference";
+      const targetUid = no_spk;
+      const targetHeader = "ref_spk";
+
+      Swal.fire({ title: "Mengunggah...", didOpen: () => Swal.showLoading() });
+
+      google.script.run
+        .withSuccessHandler(function (url) {
+          Swal.fire("Berhasil", `File diunggah: <a href="${url}" target="_blank">Lihat</a>`, "success");
+          loadRABForSPK(); // refresh setelah upload
+        })
+        .withFailureHandler(function (err) {
+          Swal.fire("Gagal", err.message, "error");
+        })
+        .uploadPdfAndSetReference(base64Data, fileName, targetSheet, targetUid, targetHeader);
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  /**
+   * Mengisi otomatis data kendaraan berdasarkan input nomor RAB dari datalist.
+   *
+   * - Mengambil data dari `data_laporan` dan `data_vehicles`
+   * - Mengisi plat nomor, keterangan, jenis kendaraan, no mesin, dan no rangka
+   *
+   * @event input
+   * @returns {void}
+   */
+  $(document).on("input", "#staticRab", function () {
+    const val = $(this).val();
+    viewLog && console.warn("data_laporan", data_laporan);
+    const found = data_laporan.find(item => item.no_rab == val);
+    const found_kr = data_vehicles.find(item => item.plat_kr == found?.plat_kr);
+    viewLog && console.warn('found', found);
+    viewLog && console.warn('found_kr', found_kr);
+
+    if (found) {
+      $("#plat_kr").val(found.plat_kr).change();
+      $("#keterangan").val(found.keterangan).change();
+      $("#jenis_kr").val(found_kr?.jenis + "/" + found_kr?.merk).change();
+      $("#no_mesin").val(found_kr?.no_mesin).change();
+      $("#no_rangka").val(found_kr?.no_rangka).change();
+    }
+  });
+
+  /**
+   * Mengambil dan menampilkan metadata SPK dari server untuk mengisi form secara otomatis.
+   *
+   * - SPK info dimuat dari server (array 2D)
+   * - Mengisi 8 input text (`inputData01` - `inputData08`)
+   * - Mengisi 6 input tanggal (`inputData13` - `inputData18`) berdasarkan baris ke-3 sampai ke-8
+   * - Set tanggal SPK menjadi hari ini
+   *
+   * @returns {void}
+   *
+   * @fires google.script.run.getInfoSPK
+   */
+  function loadInfoSPKToForm() {
+    google.script.run
+      .withSuccessHandler(function (infoSPK) {
+        infoSPK = JSON.parse(infoSPK);
+        if (!infoSPK || !Array.isArray(infoSPK)) {
+          console.error("Data infoSPK tidak valid");
+          return;
+        }
+
+        viewLog && console.warn('infoSPK', infoSPK);
+        originalInfoSPK = infoSPK;
+
+        // Input teks (baris 1–8)
+        for (let i = 0; i < 8; i++) {
+          const inputId = "#inputData0" + (i + 1);
+          $(inputId).val(infoSPK[i][0] || "").change();
+        }
+
+        // Input tanggal (baris 3–8)
+        for (let j = 2; j < 8; j++) {
+          const tanggalId = "#inputData" + (11 + j);
+          $(tanggalId).val(formatDateToYYYYMMDD(infoSPK[j][1], "-") || "").change();
+        }
+
+        $('#tanggal_spk').val(formatDateToYYYYMMDD(new Date(), "-")).change();
+
+        // Hilangkan placeholder
+        $("#main-content .placeholder").removeClass("placeholder");
+        showLoadingScreen();
+      })
+      .getInfoSPK();
+  }
+
+  /**
+   * Event handler untuk tombol "Buat SPK".
+   * 
+   * - Validasi apakah data input berubah dari data dasar (`originalInfoSPK`)
+   * - Jika berubah, minta konfirmasi pengguna dan simpan update dasar dokumen
+   * - Jika tidak berubah, langsung jalankan proses `buatSPK()`
+   *
+   * @event click
+   * @returns {void}
+   *
+   * @fires google.script.run.updateResumeDasarDokumen
+   */
+  $(document).on("click", "#btnCreateSPK", function () {
+    let changedFields = [];
+
+    const requiredFields = [
+      { id: '#tanggal_spk', label: 'Tanggal SPK' },
+      { id: '#no_spk', label: 'No. SPK' },
+      { id: '#inputData03', label: 'No. Perjanjian (PKS)' },
+      { id: '#inputData13', label: 'Tanggal PKS' },
+      { id: '#inputData04', label: 'Addendum I' },
+      { id: '#inputData14', label: 'Tanggal Addendum I' },
+      { id: '#inputData05', label: 'Addendum II' },
+      { id: '#inputData15', label: 'Tanggal Addendum II' },
+      { id: '#inputData02', label: 'Nama Pekerjaan' },
+      { id: '#inputData01', label: 'Nama Rekanan' },
+      { id: '#plat_kr', label: 'Plat Kendaraan' },
+      { id: '#jenis_kr', label: 'Jenis Kendaraan' },
+      { id: '#no_mesin', label: 'No. Mesin' },
+      { id: '#no_rangka', label: 'No. Rangka' },
+      { id: '#keterangan', label: 'Keterangan' }
+    ];
+
+    for (let i = 0; i < 8; i++) {
+      const inputId = "#inputData0" + (i + 1);
+      const inputVal = $(inputId).val().trim();
+      const originalVal = originalInfoSPK[i]?.[0]?.trim() || "";
+
+      // viewLog && console.warn(inputVal !== originalVal, inputVal + "!==" + originalVal)
+
+      if (inputVal !== originalVal) {
+        changedFields.push(requiredFields.find(item => item.id == `#inputData0${i + 1}`).label);
+      }
+    }
+
+    for (let j = 2; j < 8; j++) {
+      const inputTanggal = "#inputData" + (11 + j);
+      const inputVal = $(inputTanggal).val().trim();
+      const originalVal = formatDateToYYYYMMDD(originalInfoSPK[j]?.[1], "-")?.trim() || "";
+
+      // viewLog && console.warn(inputVal !== originalVal, inputVal + "!==" + originalVal)
+      if (inputVal !== originalVal) {
+        changedFields.push(requiredFields.find(item => item.id == `inputData${11 + j}`).label);
+      }
+    }
+
+    if (changedFields.length > 0) {
+      // viewLog && console.warn('changedFields', changedFields)
+      // viewLog && console.warn('originalInfoSPK', originalInfoSPK)
+      const sourceData = [
+        [$('#inputData01').val(), ""],
+        [$('#inputData02').val(), ""],
+        [$('#inputData03').val(), $('#inputData13').val()],
+        [$('#inputData04').val(), $('#inputData14').val()],
+        [$('#inputData05').val(), $('#inputData15').val()],
+        [$('#inputData06').val(), $('#inputData16').val()],
+        [$('#inputData07').val(), $('#inputData17').val()],
+        [$('#inputData08').val(), $('#inputData18').val()]
+      ]
+      Swal.fire({
+        icon: 'warning',
+        title: 'Data Berubah',
+        html: `Beberapa data dasar dokumen telah diubah: <br><b>${changedFields.join(', ')}</b>`,
+        showCancelButton: true,
+        confirmButtonText: 'Lanjutkan Buat SPK',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          google.script.run
+            .withSuccessHandler(function (msg) {
+              console.log(msg);
+              buatSPK(); // lanjut ke proses buat SPK setelah update berhasil
+            })
+            .withFailureHandler(function (err) {
+              alert("Gagal memperbarui data dasar dokumen: " + err.message);
+            })
+            .updateResumeDasarDokumen(sourceData);
+        }
+      });
+    } else {
+      buatSPK(); // langsung lanjut jika tidak ada perubahan
+    }
+  });
+
+  /**
+   * Prosedur untuk membuat dokumen SPK dalam format PDF dan menyimpan metadata ke Google Sheet.
+   *
+   * - Validasi field wajib
+   * - Generate PDF dengan html2pdf dari elemen `#spmkContent`
+   * - Simpan metadata SPK ke sheet `no_spk`
+   *
+   * @function
+   * @returns {void}
+   *
+   * @fires google.script.run.saveSPKDetailToSheet
+   */
+  function buatSPK() {
+    const requiredFields = [
+      { id: '#tanggal_spk', label: 'Tanggal SPK' },
+      { id: '#no_spk', label: 'No. SPK' },
+      { id: '#inputData03', label: 'No. Perjanjian (PKS)' },
+      { id: '#inputData13', label: 'Tanggal PKS' },
+      { id: '#inputData04', label: 'Addendum I' },
+      { id: '#inputData14', label: 'Tanggal Addendum I' },
+      { id: '#inputData05', label: 'Addendum II' },
+      { id: '#inputData15', label: 'Tanggal Addendum II' },
+      { id: '#inputData02', label: 'Nama Pekerjaan' },
+      { id: '#plat_kr', label: 'Plat Kendaraan' },
+      { id: '#jenis_kr', label: 'Jenis Kendaraan' },
+      { id: '#no_mesin', label: 'No. Mesin' },
+      { id: '#no_rangka', label: 'No. Rangka' },
+      { id: '#keterangan', label: 'Keterangan' }
+    ];
+
+    let isValid = true;
+    let missingFields = [];
+
+    requiredFields.forEach(field => {
+      const value = $(field.id).val();
+      if (!value || value.trim() === "") {
+        isValid = false;
+        missingFields.push(field.label);
+      }
+    });
+
+    if (!isValid) {
+      const message = "Mohon lengkapi field berikut sebelum membuat SPK:\n- " + missingFields.join("\n- ");
+      alert(message);
+      return;
+    }
+
+    viewLog && console.warn("Lanjut buat SPK...");
+    // Panggil implementasi SPK
+    showLoadingScreen("Menyimpan halaman ...")
+    $('#spmkContent').show()
+    const element = document.getElementById('spmkContent');
+
+    const opt = {
+      margin: 0, //[2.5, 2.5, 1.5, 2.6], // top, right, bottom, left (in cm)
+      filename: formatFilenameFromString(`${formatDateToYYYYMMDD($('#tanggal_spk').val())} ${$('#no_spk').val()} ${$('#keterangan').val()}`),
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true
+      },
+      jsPDF: {
+        unit: 'cm',
+        format: 'a4',
+        orientation: 'portrait'
+      },
+      pagebreak: {
+        mode: ['avoid-all', 'css', 'legacy']
+      }
+    };
+
+    // TUNGGU PDF selesai disimpan, baru hide dan clear loading
+    html2pdf().set(opt).from(element).save().then(() => {
+      $('#spmkContent').hide();
+      showLoadingScreen(); // kosongkan/matikan loading
+
+
+      // Data yang akan disimpan ke sheet
+      const data = [{
+        no_spk: $('#no_spk').val(),
+        tanggal_spk: $('#tanggal_spk').val(),
+        keterangan: $('#keterangan').val(),
+        status_spk: "Open",
+        no_rab: $('#staticRab').val() || "",
+        no_ba: "", // Kosong dulu
+        ref_rab: "", // Optional
+        ref_spk: "", // Optional
+        ref_ba: "",  // Optional
+        deleted: ""
+      }];
+
+      // Kirim ke Google Apps Script
+      google.script.run
+        .withSuccessHandler(() => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Berhasil',
+            text: 'File SPK berhasil dibuat dan data disimpan.'
+          });
+          loadRABForSPK()
+        })
+        .withFailureHandler(err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Gagal Menyimpan',
+            text: 'Terjadi kesalahan saat menyimpan data SPK.',
+            footer: `<code>${err.message || err}</code>`
+          });
+        })
+        .saveSPKDetailToSheet(data);
+    });
+  }
+
+  /**
+   * Menyinkronkan data input SPK ke area preview PDF di elemen `#spmkContent`.
+   * Dipicu setiap kali input relevan diubah.
+   *
+   * - Update isi tag dengan ID prefiks `i...`, misalnya `#iplat_kr`, `#itanggal_spk`, dll
+   * - Menggunakan `formatDateID()` untuk konversi tanggal ke format Indonesia
+   *
+   * @event input|change
+   * @returns {void}
+   */
+  $(document).on("input change", "#tanggal_spk, #no_spk, #plat_kr, #jenis_kr, #no_mesin, #no_rangka, #keterangan, #inputData01, #inputData02, #inputData03, #inputData04, #inputData05, #inputData06, #inputData06, #inputData08, #inputData11, #inputData12, #inputData13, #inputData14, #inputData15, #inputData16, #inputData16, #inputData18", function () {
+    $('#itanggal_spk').html(`Jombang, ${formatDateID($('#tanggal_spk').val())}`)
+    $('#ino_spk').html(`: ${$('#no_spk').val()}`)
+    $('#ino_pks').html(`: ${$('#inputData03').val()}`)
+    $('#itanggal_pks').html(`${formatDateID($('#inputData13').val())}`)
+    $('#ino_add1').html(`: ${$('#inputData04').val()}`)
+    $('#itanggal_add1').html(`${formatDateID($('#inputData14').val())}`)
+    $('#ino_add2').html(`: ${$('#inputData05').val()}`)
+    $('#itanggal_add2').html(`${formatDateID($('#inputData15').val())}`)
+    $('#inama_pekerjaan').html(`: ${$('#inputData02').val()}`)
+    $('#iplat_kr').html(`: ${$('#plat_kr').val()}`)
+    $('#ijenis_kr').html(`: ${$('#jenis_kr').val()}`)
+    $('#ino_mesin').html(`: ${$('#no_mesin').val()}`)
+    $('#ino_rangka').html(`: ${$('#no_rangka').val()}`)
+    $('#iketerangan').html(`: ${$('#keterangan').val()}`)
+  })
+
+</script>

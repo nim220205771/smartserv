@@ -1,0 +1,250 @@
+<div class="container">
+  <div class="d-flex mb-3">
+    <h2 onclick="ActiveMenu('app_harsat')">
+      <i class="fa-solid fa-money-check-dollar"></i>
+      &nbsp;Harga Satuan
+    </h2>
+    <button class="btn btn-primary ms-auto" onclick="showForm()">
+      <i class="fa-solid fa-cart-plus"></i>
+      &nbsp;Tambah Barang
+    </button>
+  </div>
+  <table id="harsatTable" class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nama Barang</th>
+        <th>Harga</th>
+        <th>Satuan</th>
+        <th>Jenis</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal fade" id="barangModal" tabindex="-1">
+    <div class="modal-dialog">
+      <form class="modal-content" id="barangForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Form Barang</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="uid" readonly />
+          <div class="mb-2">
+            <label class="form-label">Nama Barang</label>
+            <input type="text" class="form-control" id="nama_barang" required />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Harga Barang</label>
+            <input type="text" inputmode="numeric" class="form-control" id="harga_barang" required oninput="formatInputNumber(this)" />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Satuan Barang</label>
+            <input type="text" class="form-control" id="satuan_barang" required />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Jenis Barang</label>
+            <select type="text" class="form-control" id="jenis_barang" required >
+              <option value="JASA">JASA</option>
+              <option value="SUKU CADANG">SUKU CADANG</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Simpan</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  /**
+   * Memuat ulang tabel Harga Satuan dari server (Google Apps Script)
+   * dan mendekripsi setiap entri sebelum ditampilkan.
+   *
+   * @function refreshTable
+   * @returns {void}
+   */
+  function refreshTable() {
+    showLoadingScreen("Menyegarkan Table ... ");
+    google.script.run
+      .withSuccessHandler(data => {
+        data = data.map(item => ({
+          ...item,
+          nama_barang: decryptValue(item.nama_barang),
+          harga_barang: decryptValue(item.harga_barang),
+          satuan_barang: decryptValue(item.satuan_barang),
+          jenis_barang: decryptValue(item.jenis_barang)
+        }));
+        table.clear().rows.add(data).draw();
+        showLoadingScreen();
+      })
+      .getHarsat();
+  }
+
+  /**
+   * Menampilkan modal form untuk tambah/edit data barang.
+   * Jika item disediakan, maka form diisi untuk edit.
+   *
+   * @function showForm
+   * @param {Object|null} item - Data barang yang akan diedit (opsional).
+   * @returns {void}
+   */
+  function showForm(item = null) {
+    if (item) {
+      $("#uid").val(item.uid);
+      $("#nama_barang").val(item.nama_barang);
+      $("#harga_barang").val(formatNumber(item.harga_barang));
+      $("#satuan_barang").val(item.satuan_barang);
+      $("#jenis_barang").val(item.jenis_barang);
+    } else {
+      $("#barangForm")[0].reset();
+      $("#uid").val("");
+    }
+    new bootstrap.Modal(document.getElementById("barangModal")).show();
+  }
+
+  /**
+   * Menghapus data barang berdasarkan UID, dengan konfirmasi dari pengguna.
+   *
+   * @function deleteItem
+   * @param {string} uid - ID unik barang yang akan dihapus.
+   * @returns {void}
+   */
+  function deleteItem(uid) {
+    Swal.fire({
+      title: "Hapus Data?",
+      text: "Data yang dihapus tidak bisa dikembalikan.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Hapus!",
+      cancelButtonText: "Batal"
+    }).then(result => {
+      if (result.isConfirmed) {
+        showLoadingScreen("Menghapus Item ...");
+        google.script.run
+          .withSuccessHandler(() => {
+            refreshTable();
+            Swal.fire({
+              icon: "success",
+              title: "Terhapus!",
+              text: "Data telah dihapus.",
+              timer: 3000,
+              timerProgressBar: true,
+              showConfirmButton: false
+            });
+          })
+          .withFailureHandler(err => {
+            Swal.fire({
+              icon: "error",
+              title: "Gagal",
+              text: err.message,
+              timer: 3000,
+              timerProgressBar: true,
+              showConfirmButton: false
+            });
+            showLoadingScreen();
+          })
+          .deleteHarsat(uid);
+      }
+    });
+  }
+
+  /**
+   * Handler submit form barang untuk tambah atau update data.
+   * Mengenkripsi data sebelum dikirim ke server.
+   *
+   * @event submit
+   * @param {Event} e - Event submit form.
+   */
+  $("#barangForm").on("submit", function (e) {
+    showLoadingScreen("Menyimpan Barang ... ");
+    e.preventDefault();
+
+    const item = {
+      uid: $("#uid").val(),
+      nama_barang: encryptValue($("#nama_barang").val()),
+      harga_barang: encryptValue(parseFloat($("#harga_barang").val().replace(/[^\d]/g, ""))),
+      satuan_barang: encryptValue($("#satuan_barang").val()),
+      jenis_barang: encryptValue($("#jenis_barang").val())
+    };
+
+    const modalInstance = bootstrap.Modal.getInstance(document.getElementById("barangModal"));
+
+    const onSuccess = () => {
+      modalInstance.hide();
+      refreshTable();
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: "Data telah disimpan",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
+      showLoadingScreen();
+    };
+
+    if (item.uid) {
+      google.script.run.withSuccessHandler(onSuccess).updateHarsat(item);
+    } else {
+      google.script.run.withSuccessHandler(onSuccess).addHarsat(item);
+    }
+  });
+
+  /**
+   * Format angka ke format lokal Indonesia (ribuan pakai titik).
+   *
+   * @function formatNumber
+   * @param {number|string} num - Nilai angka mentah.
+   * @returns {string} - Format angka dengan titik.
+   */
+  function formatNumber(num) {
+    return parseFloat(num).toLocaleString("id-ID");
+  }
+
+  /**
+   * Format nilai input angka secara real-time ke format ribuan.
+   *
+   * @function formatInputNumber
+   * @param {HTMLInputElement} input - Elemen input yang sedang diubah.
+   * @returns {void}
+   */
+  function formatInputNumber(input) {
+    let val = input.value.replace(/[^\d]/g, "");
+    input.value = parseInt(val || 0).toLocaleString("id-ID");
+  }
+
+  /**
+   * Inisialisasi DataTable saat halaman siap.
+   * Menentukan kolom dan action button edit/hapus.
+   */
+  $(document).ready(function () {
+    table = $("#harsatTable").DataTable({
+      columns: [
+        { data: "nama_barang" },
+        {
+          data: "harga_barang",
+          render: function (data) {
+            return formatNumber(data);
+          }
+        },
+        { data: "satuan_barang" },
+        { data: "jenis_barang" },
+        {
+          data: null,
+          render: item => `
+          <button class="btn btn-sm btn-warning" onclick='showForm(${JSON.stringify(item)})'><i class="fa fa-edit"></i></button>
+          <button class="btn btn-sm btn-danger" onclick='deleteItem("${item.uid}")'><i class="fa fa-trash"></i></button>
+        `
+        }
+      ]
+    });
+
+    refreshTable();
+  });
+</script>

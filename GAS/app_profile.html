@@ -1,0 +1,187 @@
+<div class="card">
+  <div class="card-body">
+    <span class="position-absolute top-0 start-50 translate-middle badge text-bg-secondary" id="staticuser_uid">999</span>
+
+    <div class="mb-3 row">
+      <label for="staticuser_fullname" class="col-sm-4 col-form-label">Full Name</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="staticuser_fullname" />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticuser_perusahaan" class="col-sm-4 col-form-label">Nama Perusahaan</label>
+      <div class="col-sm-8">
+        <input class="form-control" id="staticuser_perusahaan" placeholder="PT. Astra Infra Solutions" />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticuser_jabatan" class="col-sm-4 col-form-label">Nama Pekerjaan</label>
+      <div class="col-sm-8">
+        <input class="form-control" id="staticuser_jabatan" placeholder="Kadep Pemeliharaan" />
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticuser_name" class="col-sm-4 col-form-label">User Name</label>
+      <div class="col-sm-8">
+        <input type="text" class="form-control" id="staticuser_name" readonly disabled />
+      </div>
+    </div>
+    <div class="mb-3 row position-relative">
+      <label for="staticuser_passkey" class="col-sm-4 col-form-label">Masukan Password</label>
+      <div class="col-sm-8 position-relative">
+        <input type="password" class="form-control" id="staticuser_passkey" />
+        <span class="toggle-password" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer" data-bs-toggle="tooltip" data-bs-html="true" data-bs-title="👁‍🗨 Tampilkan atau Sembunyikan Password">
+          <i class="fa-solid fa-eye-slash"></i>
+        </span>
+      </div>
+    </div>
+    <button type="button" class="btn btn-outline-success float-end" id="btn-simpan-user" onclick="UserName()" style="display: none">
+      <i class="fa-solid fa-floppy-disk"></i>
+      &nbsp;Save
+    </button>
+
+    <button type="button" class="btn btn-outline-danger float-end mx-3" id="btn-logout-user" onclick="Logout()">
+      <i class="fa-solid fa-floppy-disk"></i>
+      &nbsp;Logout
+    </button>
+  </div>
+</div>
+
+<script type="text/javascript">
+  /**
+   * Mengisi form informasi pengguna dari localStorage saat dokumen siap.
+   * Juga menambahkan listener untuk mendeteksi perubahan input pengguna
+   * dan menampilkan tombol simpan jika terjadi perubahan.
+   *
+   * @function
+   * @returns {void}
+   */
+  $(document).ready(async function () {
+    $("#staticuser_fullname").val(localStorage.user_fullname).change();
+    $("#staticuser_uid").html(localStorage.user_uid).change();
+    $("#staticuser_name").val(localStorage.user_name).change();
+    $("#staticuser_passkey").val(decryptString(localStorage.user_passkey, ᗩrisՈurᗰahendra)).change();
+    $("#staticuser_perusahaan").val(localStorage.user_perusahaan).change();
+    $("#staticuser_jabatan").val(localStorage.user_jabatan).change();
+    checkIfUserDataChanged();
+
+    $("#staticuser_fullname, #staticuser_name, #staticuser_passkey, #staticuser_perusahaan, #staticuser_pekerjaan, #staticuser_jabatan").on("input change", function () {
+      checkIfUserDataChanged();
+    });
+
+    $(document).on("click", ".toggle-password", function () {
+      const input = $(this).siblings("input");
+      const icon = $(this).find("svg");
+
+      if (input.attr("type") === "password") {
+        input.attr("type", "text");
+        icon.removeClass("fa-eye-slash").addClass("fa-eye");
+      } else {
+        input.attr("type", "password");
+        icon.removeClass("fa-eye").addClass("fa-eye-slash");
+      }
+    });
+  });
+
+  /**
+   * Mengecek apakah ada perubahan data pengguna dibandingkan data yang tersimpan di localStorage.
+   * Jika ada perbedaan, tombol simpan akan ditampilkan.
+   *
+   * @function checkIfUserDataChanged
+   * @returns {void}
+   */
+  function checkIfUserDataChanged() {
+    let changed = false;
+
+    const localData = {
+      fullname: localStorage.user_fullname,
+      uid: localStorage.user_uid,
+      name: localStorage.user_name,
+      passkey: decryptString(localStorage.user_passkey, ᗩrisՈurᗰahendra),
+      vendor: localStorage.user_perusahaan,
+      jabatan: localStorage.user_jabatan
+    };
+
+    if ($("#staticuser_fullname").val() !== localData.fullname) changed = true;
+    if ($("#staticuser_uid").html() !== localData.uid) changed = true;
+    if ($("#staticuser_name").val() !== localData.name) changed = true;
+    if ($("#staticuser_passkey").val() !== localData.passkey) changed = true;
+    if ($("#staticuser_perusahaan").val() !== localData.vendor) changed = true;
+    if ($("#staticuser_jabatan").val() !== localData.jabatan) changed = true;
+
+    $("#btn-simpan-user").toggle(changed);
+  }
+
+  /**
+   * Mengirimkan data pengguna yang telah diperbarui ke server menggunakan AJAX.
+   * Data yang dikirim telah melalui proses sanitasi dan enkripsi.
+   * Menampilkan umpan balik sukses/gagal menggunakan SweetAlert2.
+   *
+   * @function UserName
+   * @returns {void}
+   */
+  function UserName() {
+    showLoadingScreen("Memperbaruhi data ...");
+
+    const data = {
+      fullname: sanitizeInput($("#staticuser_fullname").val()),
+      uid: sanitizeInput($("#staticuser_uid").html()),
+      name: sanitizeInput($("#staticuser_name").val()),
+      passkey: encryptString(sanitizeInput($("#staticuser_passkey").val()), ᗩrisՈurᗰahendra),
+      perusahaan: sanitizeInput($("#staticuser_perusahaan").val()),
+      jabatan: sanitizeInput($("#staticuser_jabatan").val())
+    };
+
+    viewLog && console.log("data", data);
+
+    $.ajax({
+      url: `https://script.google.com/macros/s/${Macro_User}/exec`,
+      method: "GET",
+      dataType: "json",
+      data: {
+        mode: "akses",
+        post: "setname",
+        data: JSON.stringify(data)
+      },
+      timeout: delay
+    })
+      .done(function (response) {
+        viewLog && console.log("response", response);
+        if (response.status === "success" && response.data != null) {
+          Swal.fire({
+            title: "Akses Pengguna",
+            text: "Berhasil mengganti Nama User",
+            icon: "success",
+            timer: 3000
+          });
+          $("#nama_personil").html($("#input_nama").val());
+          localStorage.setItem("nama_personil", $("#input_nama").val());
+          $("#ModalName").modal("hide");
+        } else {
+          Swal.fire({
+            title: "Akses Pengguna",
+            text: "GAGAL mengganti Nama User",
+            icon: "warning",
+            timer: 3000
+          });
+        }
+        showLoadingScreen();
+      })
+      .fail(function (jqxhr, textStatus, error) {
+        if (textStatus === "timeout") {
+          Swal.fire({
+            title: "Request Timeout!",
+            text: "Tidak ada respon dalam batas waktu yang ditentukan.",
+            icon: "error"
+          });
+        } else {
+          Swal.fire({
+            title: "Request Failed!",
+            text: `Request Failed: ${textStatus}, ${error}`,
+            icon: "error"
+          });
+        }
+        showLoadingScreen();
+      });
+  }
+</script>

@@ -1,0 +1,1054 @@
+<!-- Modal Detail Data -->
+<div class="modal fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="detailModalLabel">Detail RAB</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <div class="printableArea p-3">
+
+          <!-- 1. HEADER -->
+          <div class="row">
+            <div class="col-7">
+              <img src="" alt="Logo" class="img-fluid logo">
+            </div>
+            <div class="col-5">
+              <div><strong>PT. Astra International - Isuzu</strong></div>
+              <div>HR Muhammad Branch</div>
+              <div class="d-flex" style="font-size: 11px;">
+                <div class="float-start">Jl. HR. Muhammad No.kav 8-10</div>
+                <div class="float-end ms-auto">Telp: (031) 7341000</div>
+              </div>
+              <div class="d-flex" style="font-size: 11px;">
+                <div class="float-start">Surabaya</div>
+                <div class="float-end ms-auto">Fax: (031) 7328797</div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="no_rab" class="col-sm-3 col-form-label">Nomor RAB</label>
+            <div class="input-group col-sm-9 mb-3">
+              <input type="text" class="form-control" readonly aria-describedby="ref_rab" id="no_rab">
+              <a href="" class="input-group-text text-info ref_rab" id="ref_rab" target="_blank" and
+                rel="noopener noreferrer"><i class="fa-regular fa-file-pdf"></i></a>
+              <button class="input-group-text text-success" id="ref_uploadrab" onclick="$('#uploadPdfInput').click()"><i
+                  class="fa-solid fa-file-arrow-up"></i></button>
+              <input type="file" id="uploadPdfInput" accept="application/pdf" style="display:none">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="no_spk" class="col-sm-3 col-form-label">Nomor SPK</label>
+            <div class="input-group col-sm-9 mb-3">
+              <input type="text" class="form-control" readonly aria-describedby="ref_spk" id="no_spk">
+              <a href="" class="input-group-text text-info" id="ref_spk" target="_blank" and
+                rel="noopener noreferrer"><i class="fa-regular fa-file-pdf"></i></a>
+              <button class="input-group-text text-success" id="ref_uploadspk" onclick="$('#uploadPdfSpk').click()"><i
+                  class="fa-solid fa-file-arrow-up"></i></button>
+              <input type="file" id="uploadPdfSpk" accept="application/pdf" style="display:none">
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="no_ba" class="col-sm-3 col-form-label">Nomor BA</label>
+            <div class="input-group col-sm-9 mb-3">
+              <input type="text" class="form-control" readonly aria-describedby="ref_ba" id="no_ba">
+              <a href="" class="input-group-text text-info" id="ref_ba" target="_blank" and rel="noopener noreferrer"><i
+                  class="fa-regular fa-file-pdf"></i></a>
+              <button class="input-group-text text-success" id="ref_uploadba" onclick="$('#uploadPdfBa').click()"><i
+                  class="fa-solid fa-file-arrow-up"></i></button>
+              <input type="file" id="uploadPdfBa" accept="application/pdf" style="display:none">
+            </div>
+          </div>
+          <!-- 2. INFORMASI KONSUMEN -->
+          <div class="row border border-dark border-2 mb-2">
+
+            <div class="section-title">
+              <h5>Estimasi Biaya</h5>
+            </div>
+            <div class="col-7">
+              <table class="table table-sm table-borderless">
+                <tbody>
+                  <tr>
+                    <td class="w-25">Nama Konsumen</td>
+                    <td>: MHI</td>
+                  </tr>
+                  <tr>
+                    <td>Alamat</td>
+                    <td>: Jalan Akses Toll, Pesantren, Tembelang, Santrean, Kec. Jombang, Kabupaten Jombang, Jawa Timur
+                      61452
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="col-5">
+              <table class="table table-sm table-borderless">
+                <tbody>
+                  <tr>
+                    <td class="w-25">No Polisi</td>
+                    <td>: MOBIL NIUNIU</td>
+                  </tr>
+                  <tr>
+                    <td>No Rangka</td>
+                    <td>: </td>
+                  </tr>
+                  <tr>
+                    <td>KM</td>
+                    <td>: </td>
+                  </tr>
+                  <tr>
+                    <td>Warna/Tahun</td>
+                    <td>: </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row border border-dark border-2 mb-2">
+            <!-- 3. DETAIL PERMINTAAN BARANG -->
+            <table id="rabDetailTablePrint" class="table table-sm table-borderless">
+              <thead class="text-center">
+                <tr class="table-light">
+                  <th style="width: 20%"></th>
+                  <th style="width: 40%">PEKERJAAN</th>
+                  <th style="width: 15%" class="text-end">PRICE LIST</th>
+                  <th style="width: 5%">QTY</th>
+                  <th style="width: 20%">Harga</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="text-center">JASA</td>
+                  <td>Printer Epson L3110</td>
+                  <td class="text-end">1.500.000</td>
+                  <td class="text-center">2</td>
+                  <td class="text-end">3.000.000</td>
+                </tr>
+
+                <!-- Tambah baris lain jika perlu -->
+
+                <!-- Baris Grand Total -->
+                <tr>
+                  <td colspan="4" class="text-end"><strong>Grand Total</strong></td>
+                  <td class="text-end"><strong>3.000.000</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Add RAB -->
+<div class="modal fade" id="rabModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><i class="fa-solid fa-file-invoice-dollar"></i>&nbsp;Buat RAB Baru</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="card">
+          <div class="card-body">
+            <div>
+              <div class="row">
+                <div class="col-6">
+                  <h5 class="card-title">Estimasi Biaya</h5>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <label for="staticEmail" class="col-sm-6 col-form-label">Nomor Laporan</label>
+                    <div class="col-sm-6">
+                      <input type="text" list="datalistLaporanOptions" class="form-control" id="staticLaporan"
+                        placeholder="Masukan UID dari Laporan Kerusakan" />
+                      <datalist id="datalistLaporanOptions"></datalist>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-1">
+                <div class="col-6">
+                  <div class="row">
+                    <label for="inputPassword" class="col-sm-5 col-form-label">Nama Constomer</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" id="constomer" readonly value="MHI" />
+                    </div>
+                  </div>
+                  <div class="row mt-1">
+                    <label for="inputPassword" class="col-sm-5 col-form-label">Alamat</label>
+                    <div class="col-sm-7">
+                      <textarea type="text" class="form-control" id="alamat" readonly
+                        rows="4">Jalan Akses Toll, Pesantren, Tembelang, Santrean, Pesantren, Kec. Jombang, Kabupaten Jombang, Jawa Timur 61452</textarea>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row mt-1">
+                    <label for="inputPassword" class="col-sm-4 col-form-label">Nomor Polisi</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="plat_kr" readonly placeholder="A 1234 XYZ" />
+                    </div>
+                  </div>
+                  <div class="row mt-1">
+                    <label for="inputPassword" class="col-sm-4 col-form-label">Nomor Rangka</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="no_rangka" readonly value="" />
+                    </div>
+                  </div>
+                  <div class="row mt-1">
+                    <label for="inputPassword" class="col-sm-4 col-form-label">KM</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" readonly id="odo_meter" value="" />
+                    </div>
+                  </div>
+                  <div class="row mt-1">
+                    <label for="inputPassword" class="col-sm-4 col-form-label">Warna/Tahun</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="warna_tahun" readonly value="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <button class="btn btn-primary mt-2 float-start" id="addItemRow"><i
+                      class="fa-solid fa-cart-plus"></i>&nbsp;Tambah Item</button>
+                  <div class="text-start mt-2 float-end">
+                    <strong>Grand Total:</strong>
+                    <span id="grandTotal">0</span>
+                  </div>
+
+                </div>
+                <div class="col-6">
+
+                  <button class="btn btn-success mt-2 float-start" id="saveRAB"><i
+                      class="fa-solid fa-floppy-disk"></i>&nbsp;Simpan RAB</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <table class="table table-bordered display" id="rabDetailTable">
+          <thead>
+            <tr>
+              <th>Nama Item</th>
+              <th>Qty</th>
+              <th>Satuan</th>
+              <th>Harga</th>
+              <th>Total</th>
+              <th>Keterangan</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Baris akan ditambahkan dengan JS -->
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Menu -->
+<div class="container">
+  <div class="d-flex mb-3 placeholder-grow">
+    <h2 onclick="ActiveMenu('app_rab')" class="placeholder">
+      <i class="fa-solid fa-money-check-dollar"></i>
+      &nbsp;RAB Perbaikan
+    </h2>
+    <div class="ms-auto">
+      <button type="button" class="btn btn-success placeholder" onclick="$('#rabModal').modal('show')"><i
+          class="fa-solid fa-receipt"></i>&nbsp;Tambah RAB</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-body placeholder-grow">
+      <div class="table-responsive placeholder">
+        <table id="rabTable" class="table table-bordered table-striped" style="width:100%">
+          <thead>
+            <tr>
+              <th>UID</th>
+              <th>Tanggal</th>
+              <th>Nomor RAB</th>
+              <th>Plat Kr</th>
+              <th>Nominal</th>
+              <th>Keterangan</th>
+              <th>Status</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="barangModal" tabindex="-1">
+    <div class="modal-dialog">
+      <form class="modal-content" id="barangForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Form Barang</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="uid" readonly />
+          <div class="mb-2">
+            <label class="form-label">Nama Barang</label>
+            <input type="text" class="form-control" id="nama_barang" required />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Harga Barang</label>
+            <input type="text" inputmode="numeric" class="form-control" id="harga_barang" required
+              oninput="formatInputNumber(this)" />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Satuan Barang</label>
+            <input type="text" class="form-control" id="satuan_barang" required />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Simpan</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  console.clear()
+  showLoadingScreen("Memuat Data dari Server ... ");
+  /**
+   * Memuat dan menampilkan data RAB ke dalam DataTable dengan ID `#rabTable`.
+   * 
+   * Fungsi ini akan:
+   * - Memanggil data dari server (Google Apps Script) melalui `getNoRABList`.
+   * - Menghapus dan mengganti tabel jika sudah ada sebelumnya.
+   * - Merender kolom termasuk format tanggal dan nominal IDR.
+   * - Menambahkan tombol detail pada setiap baris.
+   * - Menghapus placeholder loading di halaman.
+   * 
+   * Prasyarat:
+   * - Fungsi server-side `getNoRABList()` tersedia dan mengembalikan JSON string.
+   * - jQuery dan DataTables telah dimuat di halaman.
+   * - Elemen DOM dengan ID `#rabTable` tersedia.
+   * 
+   * @function
+   * @returns {void}
+   */
+  function loadNoRABTable() {
+    showLoadingScreen("Memuat Data Tabel ... ");
+    google.script.run.withSuccessHandler(function (response) {
+      let data = [];
+      try {
+        data = JSON.parse(response); // pastikan ini array of object
+      } catch (e) {
+        console.error("Gagal parsing data:", e);
+        return;
+      }
+      viewLog && console.table(data); // debug: tampilkan data sebagai tabel
+      viewLog && console.log("Data RAB:", data); // debug log
+      data_rab = data;
+
+      // Cegah error jika tabel sebelumnya sudah diinisialisasi
+      if ($.fn.DataTable.isDataTable("#rabTable")) {
+        $("#rabTable").DataTable().clear().destroy();
+      }
+
+      // Inisialisasi DataTable baru
+      $("#rabTable").DataTable({
+        data: data,
+        columns: [
+          { data: "uid", title: "UID" },
+          {
+            data: "tanggal",
+            title: "Tanggal",
+            render: function (data) {
+              return new Date(data).toLocaleDateString("id-ID");
+            }
+          },
+          { data: "no_rab", title: "Nomor RAB" },
+          { data: "plat_kr", title: "Plat Kr" },
+          {
+            data: "total_rab",
+            title: "Nominal",
+            render: function (data) {
+              return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR"
+              }).format(data || 0);
+            }
+          },
+          { data: "keterangan", title: "Keterangan" },
+          { data: "status_rab", title: "Status" },
+          {
+            data: null,
+            title: "Detail",
+            render: function (data, type, row) {
+              return `<button class="btn btn-sm btn-primary btn-detail" data-uid="${row.uid}">Detail</button>`;
+            }
+          }
+        ],
+        responsive: true,
+        language: {
+          emptyTable: "Tidak ada data RAB"
+        }
+      });
+
+      // Hilangkan efek placeholder di halaman
+      $("#main-content .placeholder").removeClass("placeholder");
+      showLoadingScreen(); // Sembunyikan loading
+    }).getNoRABList(); // Panggil GAS function
+  }
+
+  /**
+   * Mengonversi angka ke dalam format mata uang Rupiah (Rp).
+   * 
+   * @function
+   * @param {number|string} angka - Nilai numerik yang ingin diformat.
+   * @returns {string} Format string dalam bentuk "Rp xxx.xxx".
+   * @example
+   * formatRupiah(10000); // "Rp 10.000"
+   */
+  function formatRupiah(angka) {
+    if (!angka) return "Rp 0";
+    return "Rp " + parseInt(angka).toLocaleString("id-ID");
+  }
+
+  /**
+   * Mengambil data laporan dan data harsat dari server, serta memperbarui datalist input.
+   * 
+   * Fungsi ini:
+   * - Mengambil data dari Google Apps Script (`getRABLaporan` dan `getHarsat`).
+   * - Menyimpan hasil ke variabel `data_laporan` dan `data_harsat`.
+   * - Mengisi ulang elemen datalist dengan UID laporan.
+   * - Menyegarkan tampilan tabel RAB melalui `loadNoRABTable()`.
+   * 
+   * @function
+   * @param {string|null} [statusFilter=null] - Opsional, filter status yang akan digunakan (belum diterapkan).
+   * @returns {void}
+   */
+  function fetchLaporanFiltered(statusFilter = null) {
+    showLoadingScreen("Menyegarkan Table ... ");
+
+    // Ambil data laporan (referensi RAB)
+    google.script.run
+      .withSuccessHandler(function (data) {
+        data_laporan = JSON.parse(data);
+        const $datalist = $("#datalistLaporanOptions");
+        $datalist.empty(); // Kosongkan datalist
+
+        data_laporan.forEach(item => {
+          $("<option>").val(item.uid).appendTo($datalist);
+        });
+
+        viewLog && console.log("fetchLaporanFiltered dimuat:", data_laporan);
+        loadNoRABTable();
+      })
+      .withFailureHandler(function (err) {
+        console.error("Gagal memuat data laporan:", err.message);
+        Swal.fire("Gagal", "Tidak bisa memuat data laporan.", "error");
+      })
+      .getRABLaporan();
+
+    // Ambil data Harga Satuan (harsat)
+    showLoadingScreen("Menyegarkan Table ... ");
+    google.script.run
+      .withSuccessHandler(data => {
+        data = data.map(item => ({
+          ...item,
+          nama_barang: decryptValue(item.nama_barang),
+          harga_barang: decryptValue(item.harga_barang),
+          satuan_barang: decryptValue(item.satuan_barang),
+          jenis_barang: decryptValue(item.jenis_barang)
+        }));
+        data_harsat = data;
+        showLoadingScreen(); // hide loading
+      })
+      .getHarsat();
+  }
+
+  /**
+  * Fungsi yang dijalankan saat seluruh dokumen HTML telah dimuat.
+  * 
+  * - Mengatur logo halaman menjadi `isuzuJPG`.
+  * - Memuat data laporan dengan filter status "Open" menggunakan `fetchLaporanFiltered`.
+  * 
+  * @function
+  * @listens document:ready
+  * @returns {void}
+  */
+  $(document).ready(function () {
+    $('.logo').prop('src', isuzuJPG);
+
+    // Muat data laporan dengan status "Open" saja
+    fetchLaporanFiltered("Open");
+
+    // Jika ingin memuat semua data tanpa filter:
+    // fetchLaporanFiltered(); 
+  });
+
+  /**
+   * Menambahkan baris baru ke tabel #rabDetailTable dengan input yang dapat diisi pengguna.
+   * 
+   * - Menggunakan data dari `data_harsat` untuk mengisi datalist barang.
+   * - Input jumlah (`item_qty`) dapat diubah.
+   * - Kolom harga, satuan, jenis diisi otomatis dan readonly.
+   * - Total dihitung otomatis dari qty * harga.
+   * 
+   * @event click
+   * @returns {void}
+   */
+  $("#addItemRow").on("click", function () {
+    console.warn("data_harsat", data_harsat);
+    let $datalist = "";
+    data_harsat.forEach(item => {
+      $datalist += `<option value="${item.nama_barang}">`;
+    });
+
+    const rowHtml = `
+    <tr>
+      <td><input type="text" class="form-control item_nama" list="datalist_item_nama"/>
+          <datalist id="datalist_item_nama">${$datalist}</datalist></td>
+      <td><input type="text" inputmode="numeric" class="form-control item_qty border border-success" /></td>
+      <td><input type="text" class="form-control item_satuan" readonly/></td>
+      <td><input type="number" class="form-control item_harga" readonly/></td>
+      <td class="item_total text-end align-middle">0</td>
+      <td><input type="text" class="form-control item_jenis" readonly/></td>
+      <td><button class="btn btn-danger btn-sm deleteItemRow"><i class="fa fa-trash"></i></button></td>
+    </tr>`;
+
+    $("#rabDetailTable tbody").append(rowHtml);
+  });
+
+  /**
+   * Menghapus baris dari tabel RAB detail dan memperbarui grand total.
+   * 
+   * @event click
+   * @returns {void}
+   */
+  $(document).on("click", ".deleteItemRow", function () {
+    $(this).closest("tr").remove();
+    updateGrandTotal();
+  });
+
+  /**
+   * Menghitung dan memperbarui total untuk setiap baris berdasarkan qty dan harga.
+   * Juga memperbarui nilai grand total.
+   * 
+   * @event input
+   * @listens .item_qty:input
+   * @listens .item_harga:input
+   * @returns {void}
+   */
+  $(document).on("input", ".item_qty, .item_harga", function () {
+    const row = $(this).closest("tr");
+    const qty = parseFloat(row.find(".item_qty").val()) || 0;
+    const harga = parseFloat(row.find(".item_harga").val()) || 0;
+    const total = qty * harga;
+
+    row.find(".item_total").text(total.toLocaleString("id-ID"));
+    updateGrandTotal();
+  });
+
+  /**
+   * Menyimpan data RAB ke localStorage saat tombol #saveRAB diklik.
+   * 
+   * - Memvalidasi apakah laporan telah dipilih.
+   * - Mengambil data kendaraan dan rincian item dari form dan tabel.
+   * - Data disimpan dalam localStorage dengan key 'rabDetailData'.
+   * - Menutup modal dan mengaktifkan menu RAB.
+   *
+   * @event click
+   * @listens #saveRAB
+   * @returns {void}
+   */
+  $(document).on('click', '#saveRAB', function () {
+    const laporanVal = $("#staticLaporan").val();
+
+    // Validasi input laporan
+    if (!laporanVal || laporanVal.trim() === "") {
+      Swal.fire({
+        icon: "warning",
+        title: "Data Laporan Belum Dipilih",
+        text: "Silakan pilih laporan kerusakan terlebih dahulu sebelum menyimpan RAB.",
+        confirmButtonText: "OK"
+      });
+      return;
+    }
+
+    const dt = {
+      dt: {
+        plat_kr: $("#plat_kr").val(),
+        laporan: laporanVal,
+        constomer: $("#constomer").val(),
+        alamat: $("#alamat").val(),
+        odo_meter: $("#odo_meter").val(),
+        no_rangka: $("#no_rangka").val(),
+        warna_tahun: $("#warna_tahun").val()
+      },
+      items: []
+    };
+
+    // Ambil semua baris item dalam tabel
+    $("#rabDetailTable tbody tr").each(function () {
+      const row = {
+        item_nama: $(this).find(".item_nama").val() || "",
+        item_qty: $(this).find(".item_qty").val() || "",
+        item_satuan: $(this).find(".item_satuan").val() || "",
+        item_harga: $(this).find(".item_harga").val() || "",
+        item_total: $(this).find(".item_total").text().trim().replace(/[^\d]/g, '') || "0",
+        item_jenis: $(this).find(".item_jenis").val() || ""
+      };
+
+      // Tambahkan hanya jika item_nama tidak kosong
+      if (row.item_nama.trim() !== "") {
+        dt.items.push(row);
+      }
+    });
+
+    // Simpan ke localStorage
+    localStorage.setItem("rabDetailData", JSON.stringify(dt));
+    viewLog && console.warn('rabDetailData', dt);
+
+    // Tutup modal dan aktifkan menu RAB
+    $('#rabModal').modal('hide');
+    ActiveMenu('app_a4');
+  });
+
+  /**
+   * Mengambil semua data item dari tabel #rabDetailTable.
+   * 
+   * - Digunakan untuk mengumpulkan item yang diinputkan.
+   * - Hanya item dengan nama yang akan dimasukkan ke dalam array hasil.
+   * 
+   * @function
+   * @returns {Object[]} Daftar item dari tabel
+   * @returns {string} return[].item_nama - Nama barang
+   * @returns {number} return[].item_qty - Jumlah barang
+   * @returns {string} return[].item_satuan - Satuan barang
+   * @returns {number} return[].item_harga - Harga satuan
+   * @returns {number} return[].item_total - Total harga (qty × harga)
+   * @returns {string} return[].item_jenis - Jenis barang (JASA/SUKU CADANG)
+   */
+  function getRABData() {
+    const items = [];
+    $("#rabDetailTable tbody tr").each(function () {
+      const row = $(this);
+      const item = {
+        item_nama: row.find(".item_nama").val(),
+        item_qty: parseFloat(row.find(".item_qty").val()) || 0,
+        item_satuan: row.find(".item_satuan").val(),
+        item_harga: parseFloat(row.find(".item_harga").val()) || 0,
+        item_total: (parseFloat(row.find(".item_qty").val()) || 0) * (parseFloat(row.find(".item_harga").val()) || 0),
+        item_jenis: row.find(".item_jenis").val()
+      };
+
+      if (item.item_nama) items.push(item); // Tambahkan jika nama barang ada
+    });
+    return items;
+  }
+
+  /**
+   * Mengisi otomatis kolom `jenis`, `satuan`, dan `harga` ketika pengguna menginput nama barang.
+   * 
+   * - Mencocokkan nama barang dengan data `data_harsat`.
+   * - Jika ditemukan, isi kolom terkait dan trigger input untuk menghitung total.
+   * 
+   * @event input
+   * @listens .item_nama
+   * @returns {void}
+   */
+  $(document).on("input", ".item_nama", function () {
+    const val = $(this).val();
+    const row = $(this).closest("tr");
+
+    viewLog && console.warn("val", val);
+
+    const found = data_harsat.find(item => item.nama_barang === val);
+    if (found) {
+      row.find(".item_jenis").val(found.jenis_barang);
+      row.find(".item_satuan").val(found.satuan_barang);
+      row.find(".item_harga").val(found.harga_barang).trigger("input"); // Memicu perhitungan ulang total
+    }
+  });
+
+  /**
+   * Listener untuk input #staticLaporan.
+   * Saat UID laporan dipilih, otomatis mengisi plat kendaraan dan odo meter.
+   *
+   * @event input
+   * @listens #staticLaporan
+   * @returns {void}
+   */
+  $(document).on("input", "#staticLaporan", function () {
+    const val = $(this).val();
+    viewLog && console.warn("data_laporan", data_laporan);
+    const found = data_laporan.find(item => item.uid == val);
+    console.warn(found);
+    if (found) {
+      $("#plat_kr").val(found.plat_kr);
+      $("#odo_meter").val(found.odo_meter);
+    }
+  });
+
+  /**
+   * Menghitung dan menampilkan Grand Total dari semua item yang ada di elemen `.item_total`.
+   *
+   * - Mengambil nilai total dari tiap elemen `.item_total`.
+   * - Menjumlahkan semua nilai dan menampilkannya ke dalam elemen `#grandTotal`.
+   * 
+   * @function
+   * @returns {void}
+   */
+  function updateGrandTotal() {
+    let grandTotal = 0;
+
+    $(".item_total").each(function () {
+      const val = parseFloat($(this).text().replace(/,/g, "")) || 0;
+      grandTotal += val;
+    });
+
+    $("#grandTotal").text(grandTotal.toLocaleString());
+  }
+
+  /**
+   * Menangani klik pada tombol `.btn-detail`.
+   *
+   * - Mencari data RAB berdasarkan `uid` dari tombol.
+   * - Mengatur link referensi (ref_rab, ref_spk, ref_ba) dan status upload.
+   * - Memanggil GAS function `getRABByNoRAB()` untuk mengambil detail item.
+   * - Menampilkan modal berisi informasi detail dan daftar item dengan grand total.
+   *
+   * @event click
+   * @listens .btn-detail
+   * @returns {void}
+   */
+  $(document).on("click", ".btn-detail", function () {
+    const uid = $(this).data("uid");
+
+    if (!uid) {
+      console.warn("UID tidak ditemukan pada tombol.");
+      return;
+    }
+
+    showLoadingScreen("Memuat detail RAB...");
+
+    found = data_rab.find(item => item.uid == uid);
+
+    // Reset status tampilan link
+    $('#ref_rab, #ref_spk, #ref_ba').removeClass('text-danger').addClass('text-info');
+
+    // Kontrol visibilitas tombol upload berdasarkan role
+    userRoles.includes('menu-izusu') ? $('#ref_uploadrab').show() : $('#ref_uploadrab').hide();
+    userRoles.includes('menu-gsais') ? $('#ref_uploadspk').show() : $('#ref_uploadspk').hide();
+    userRoles.includes('menu-gsais') ? $('#ref_uploadba').show() : $('#ref_uploadba').hide();
+
+    // Isi nilai dan kondisi tombol/link
+    $('#no_rab').val(found.no_rab);
+    found.ref_rab != ""
+      ? $('#ref_rab').prop('href', found.ref_rab).prop('disabled', false)
+      : $('#ref_rab').prop('href', "javascript:void(0)").addClass('text-danger').attr('onclick', 'openNewRab()').removeAttr('target rel');
+    found.ref_rab != "" ? $('#ref_uploadrab').hide() : $('#ref_uploadrab').show();
+
+    $('#no_spk').val(found.no_spk);
+    found.ref_spk != ""
+      ? $('#ref_spk').prop('href', found.ref_spk).prop('disabled', false)
+      : $('#ref_spk').prop('href', "javascript:void(0)").addClass('text-danger').prop('disabled', true);
+
+    $('#no_ba').val(found.no_ba);
+    found.ref_ba != ""
+      ? $('#ref_ba').prop('href', found.ref_ba).prop('disabled', false)
+      : $('#ref_ba').prop('href', "javascript:void(0)").addClass('text-danger').prop('disabled', true);
+
+    // Ambil data item RAB dari server
+    google.script.run
+      .withSuccessHandler(function (data) {
+        dt = JSON.parse(data);
+        viewLog && console.warn('getRABByNoRAB', dt);
+        dataView = dt;
+
+        if (!dt || dt.length === 0) {
+          showLoadingScreen();
+          Swal.fire("Data Kosong", "Tidak ditemukan data RAB untuk nomor tersebut.", "info");
+          return;
+        }
+
+        // Tampilkan data ke template printable
+        $(".printableArea td:contains('MHI')").text(`: ${dt[0].constomer || ''}`);
+        $(".printableArea td:contains('Jalan Akses Toll')").text(`: ${dt[0].alamat || ''}`);
+        $(".printableArea td:contains('MOBIL NIUNIU')").text(`: ${dt[0].plat_kr || ''}`);
+        $(".printableArea td:contains('No Rangka')").next().text(`: ${dt[0].no_rangka || ''}`);
+        $(".printableArea td:contains('KM')").next().text(`: ${dt[0].odo_meter || ''}`);
+        $(".printableArea td:contains('Warna/Tahun')").next().text(`: ${dt[0].warna_tahun || ''}`);
+
+        const tbody = $("#rabDetailTablePrint tbody");
+        if (!tbody.length) return;
+
+        // Kosongkan semua tr kecuali Grand Total
+        tbody.find("tr").not(":last").remove();
+
+        let grandTotal = 0;
+        dt.forEach(item => {
+          const total = parseInt(item.item_total || "0", 10);
+          grandTotal += total;
+
+          const row = `
+          <tr>
+            <td class="text-center">${item.item_jenis || ""}</td>
+            <td>${item.item_nama || ""}</td>
+            <td class="text-end">${formatRupiah(item.item_harga)}</td>
+            <td class="text-center">${item.item_qty}</td>
+            <td class="text-end">${formatRupiah(total)}</td>
+          </tr>`;
+          $(row).insertBefore(tbody.find("tr:last")); // sebelum Grand Total
+        });
+
+        // Update nilai Grand Total
+        tbody.find("tr:last td:last").html(`<strong>${formatRupiah(grandTotal)}</strong>`);
+
+        $('#detailModal').modal('show');
+        showLoadingScreen(); // Hide
+      })
+      .withFailureHandler(function (err) {
+        Swal.fire("Gagal Memuat", err.message || "Terjadi kesalahan saat memuat data.", "error");
+        showLoadingScreen();
+      })
+      .getRABByNoRAB(found.no_rab);
+  });
+
+  /**
+   * Handler untuk input file PDF RAB (`#uploadPdfInput`).
+   *
+   * - Memastikan file adalah PDF.
+   * - Membaca file sebagai base64.
+   * - Mengirim file ke server melalui fungsi GAS `uploadPdfAndSetReference`.
+   * - Parameter unggahan:
+   *   - Sheet target: `"reference"`
+   *   - UID target: `#no_rab`
+   *   - Kolom tujuan: `"ref_rab"`
+   *
+   * @event change
+   * @listens #uploadPdfInput
+   * @returns {void}
+   */
+  $(document).on("change", "#uploadPdfInput", function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      Swal.fire("Hanya file PDF yang diperbolehkan!", "", "warning");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64Data = e.target.result;
+      const fileName = formatDateToYYYYMMDD(new Date()) + " " + $("#no_rab").val();
+
+      const targetSheet = "reference";
+      const targetUid = $("#no_rab").val();
+      const targetHeader = "ref_rab";
+
+      Swal.fire({ title: "Mengunggah...", didOpen: () => Swal.showLoading() });
+
+      google.script.run
+        .withSuccessHandler(function (url) {
+          Swal.fire("Berhasil", `File diunggah: <a href="${url}" target="_blank">Lihat</a>`, "success");
+        })
+        .withFailureHandler(function (err) {
+          Swal.fire("Gagal", err.message, "error");
+        })
+        .uploadPdfAndSetReference(base64Data, fileName, targetSheet, targetUid, targetHeader);
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  /**
+   * Handler untuk input file PDF SPK (`#uploadPdfSpk`).
+   *
+   * - Validasi jenis file.
+   * - Encode ke base64 dan upload ke server.
+   * - Parameter unggahan:
+   *   - Sheet target: `"reference"`
+   *   - UID target: `#no_spk`
+   *   - Kolom tujuan: `"ref_spk"`
+   *
+   * @event change
+   * @listens #uploadPdfSpk
+   * @returns {void}
+   */
+  $(document).on("change", "#uploadPdfSpk", function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      Swal.fire("Hanya file PDF yang diperbolehkan!", "", "warning");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64Data = e.target.result;
+      const fileName = formatDateToYYYYMMDD(new Date()) + " " + $("#no_spk").val();
+
+      const targetSheet = "reference";
+      const targetUid = $("#no_spk").val();
+      const targetHeader = "ref_spk";
+
+      Swal.fire({ title: "Mengunggah...", didOpen: () => Swal.showLoading() });
+
+      google.script.run
+        .withSuccessHandler(function (url) {
+          Swal.fire("Berhasil", `File diunggah: <a href="${url}" target="_blank">Lihat</a>`, "success");
+        })
+        .withFailureHandler(function (err) {
+          Swal.fire("Gagal", err.message, "error");
+        })
+        .uploadPdfAndSetReference(base64Data, fileName, targetSheet, targetUid, targetHeader);
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  /**
+   * Handler untuk input file PDF BA (`#uploadPdfBa`).
+   *
+   * - Validasi file.
+   * - Proses unggah file ke Google Drive.
+   * - Parameter unggahan:
+   *   - Sheet target: `"reference"`
+   *   - UID target: `#no_ba`
+   *   - Kolom tujuan: `"ref_ba"`
+   *
+   * @event change
+   * @listens #uploadPdfBa
+   * @returns {void}
+   */
+  $(document).on("change", "#uploadPdfBa", function () {
+    const file = this.files[0];
+    if (!file) return;
+
+    if (file.type !== "application/pdf") {
+      Swal.fire("Hanya file PDF yang diperbolehkan!", "", "warning");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64Data = e.target.result;
+      const fileName = formatDateToYYYYMMDD(new Date()) + " " + $("#no_ba").val();
+
+      const targetSheet = "reference";
+      const targetUid = $("#no_ba").val();
+      const targetHeader = "ref_ba";
+
+      Swal.fire({ title: "Mengunggah...", didOpen: () => Swal.showLoading() });
+
+      google.script.run
+        .withSuccessHandler(function (url) {
+          Swal.fire("Berhasil", `File diunggah: <a href="${url}" target="_blank">Lihat</a>`, "success");
+        })
+        .withFailureHandler(function (err) {
+          Swal.fire("Gagal", err.message, "error");
+        })
+        .uploadPdfAndSetReference(base64Data, fileName, targetSheet, targetUid, targetHeader);
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  /**
+   * Mengonversi data array dari Google Apps Script menjadi format RAB yang dapat disimpan di localStorage.
+   *
+   * @function
+   * @param {Array<Object>} input - Array of RAB item dari server (setiap objek berisi detail item dan informasi kendaraan).
+   * @returns {Object|null} Objek dengan struktur:
+   *   {
+   *     dt: {
+   *       plat_kr: string,
+   *       laporan: string (UID laporan),
+   *       constomer: string,
+   *       alamat: string,
+   *       odo_meter: string,
+   *       no_rangka: string,
+   *       warna_tahun: string
+   *     },
+   *     items: Array<{
+   *       item_nama: string,
+   *       item_qty: string,
+   *       item_satuan: string,
+   *       item_harga: string,
+   *       item_total: string,
+   *       item_jenis: string (diambil dari `keterangan`)
+   *     }>
+   *   }
+   *   Atau `null` jika input tidak valid.
+   */
+  function convertRABData(input) {
+    if (!Array.isArray(input) || input.length === 0) return null;
+
+    const first = input[0];
+
+    const dt = {
+      dt: {
+        plat_kr: first.plat_kr || "",
+        laporan: first.uid_laporan?.toString() || "",
+        constomer: first.constomer || "",
+        alamat: first.alamat || "",
+        odo_meter: first.odo_meter?.toString() || "",
+        no_rangka: first.no_rangka || "",
+        warna_tahun: first.warna_tahun || ""
+      },
+      items: input.map(item => ({
+        item_nama: item.item_nama || "",
+        item_qty: item.item_qty?.toString() || "",
+        item_satuan: item.item_satuan || "",
+        item_harga: item.item_harga?.toString() || "",
+        item_total: item.item_total?.toString() || "",
+        item_jenis: item.keterangan || ""
+      }))
+    };
+
+    return dt;
+  }
+
+  /**
+   * Menyimpan data detail RAB ke localStorage dan mengarahkan pengguna ke menu entri RAB.
+   *
+   * - Mengambil data `dataView` (global), mengonversi ke format form RAB.
+   * - Menyimpan hasilnya ke `localStorage` dengan key `rabDetailData`.
+   * - Menutup modal `#detailModal`.
+   * - Memanggil fungsi `ActiveMenu('app_a4')` untuk membuka halaman entri RAB.
+   *
+   * @function
+   * @returns {void}
+   */
+  function openNewRab() {
+    viewLog && console.warn('dataView', dataView);
+
+    localStorage.setItem("rabDetailData", JSON.stringify(convertRABData(dataView)));
+
+    $('#detailModal').modal('hide');
+
+    ActiveMenu('app_a4');
+  }
+
+</script>
