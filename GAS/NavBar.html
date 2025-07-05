@@ -1,0 +1,61 @@
+<!-- Bottom Navbar -->
+<nav class="navbar navbar-expand navbar-custom fixed-bottom" style="display: none">
+  <div class="container-fluid px-0">
+    <ul class="navbar-nav w-100 d-flex justify-content-around">
+      
+      <li class="nav-item">
+        <a class="nav-link" id="menuTabs">
+          <i class="fa-solid fa-bars"></i>
+          <span class="nav-text">Menu</span>
+        </a>
+      </li>
+      
+      <li class="nav-item menu-public">
+        <a class="nav-link active" id="app_main" onclick="ActiveMenu($(this).attr('id'))">
+          <i class="fas fa-home nav-icon"></i>
+          <span class="nav-text">Home</span>
+        </a>
+      </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link" id="" onclick="undercontruction($(this).attr('id'))">
+          <i class="fas fa-plus-circle nav-icon"></i>
+          <span class="nav-text">Add</span>
+        </a>
+      </li> -->
+      <!-- <li class="nav-item">
+        <a class="nav-link" id="" onclick="Logout()">
+          <i class="fas fa-heart nav-icon"></i>
+          <span class="nav-text">Favorites</span>
+        </a>
+      </li> -->
+      <li class="nav-item menu-person">
+        <a class="nav-link" id="app_profile" onclick="ActiveMenu($(this).attr('id'))">
+          <i class="fas fa-user nav-icon"></i>
+          <span class="nav-text">Profile</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<script type="text/javascript">
+$(document).on('click', '#menuTabs', function () {
+  $('#menuModal').modal('show'); // tampilkan modal
+  $('#menuModalBody').html(`
+    <div class="text-center py-3">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Memuat...</span>
+      </div>
+    </div>`); // loading spinner
+
+
+        function onLoadPage(contentHtml) {
+          $("#menuModalBody").html(contentHtml);
+          $("#menuModalBody .placeholder").removeClass("placeholder");
+          showLoadingScreen();
+        }
+
+        google.script.run.withSuccessHandler(onLoadPage).include('app_main');
+
+});
+</script>

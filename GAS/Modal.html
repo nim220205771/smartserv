@@ -1,0 +1,88 @@
+<!-- Modal Menu Tabs -->
+<div class="modal fade" id="menuModal" tabindex="-1" aria-labelledby="menuModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="menuModalLabel"><i class="fa-solid fa-bars"></i>&nbsp;Daftar Menu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+      </div>
+      <div class="modal-body" id="menuModalBody">
+        <div class="text-center py-3">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Memuat...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal Change Passkey -->
+<div class="modal fade" id="ModalPasskey" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalPasskeyLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ModalPasskeyLabel">
+          <i class="fa-solid fa-key"></i>
+          &nbsp;Ganti Passkey
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="mb-3 row">
+            <label for="inputPassword1" class="col-5 col-form-label">Passkey Lama</label>
+            <div class="col-7">
+              <input type="password" class="form-control" id="inputPassword1" required />
+            </div>
+          </div>
+          <div class="mb-2 row">
+            <label for="inputPassword2" class="col-5 col-form-label">Passkey Baru</label>
+            <div class="col-7">
+              <input type="password" class="form-control" id="inputPassword2" required />
+            </div>
+          </div>
+          <div class="mb-3 row">
+            <label for="inputPassword3" class="col-5 col-form-label">Ulangi Passkey</label>
+            <div class="col-7">
+              <input type="password" class="form-control" id="inputPassword3" required />
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline-success float-end" id="btn-login-try" onclick="Passkey()">
+            <i class="fa-solid fa-floppy-disk"></i>
+            &nbsp;Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Change User Name -->
+<div class="modal fade" id="ModalName" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ModalNameLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ModalNameLabel">
+          <i class="fa-solid fa-address-card"></i>
+          &nbsp;Ganti Nama User
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Overlay untuk loading screen -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner text-center">
+    <!-- Tambahkan gambar GIF animasi loading di sini -->
+    <img src="https://drive.google.com/thumbnail?id=1LD09shzkGgQbIqcM2dU2nMdnNdezDfDV&sz=w150" alt="Loading..." width="200" height="200" />
+    <div class="overlay-content">
+      <p id="loadingText">Mohon tunggu, sedang memproses...</p>
+    </div>
+  </div>
+</div>

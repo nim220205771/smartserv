@@ -1,0 +1,295 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <h2 class="">
+        <i class="fa-solid fa-users-gear"></i>
+        User Manager
+      </h2>
+    </div>
+    <div class="col-12 col-md-6">
+      <button class="btn btn-primary ms-auto float-end" onclick="showAddModal()">
+        <i class="fa-solid fa-user-plus"></i>
+        &nbsp;Tambah User
+      </button>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table id="userTable" class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>UID</th>
+          <th>Full Name</th>
+          <th>Username</th>
+          <!-- <th>Passkey</th> -->
+          <th>Perusahaan</th>
+          <th>Jabatan</th>
+          <th>As Is</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Form -->
+<div class="modal fade" id="userModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="userForm">
+        <div class="modal-header">
+          <h5 class="modal-title">Form User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="uid" />
+          <div class="mb-2">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-control" id="fullname" required />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Username</label>
+            <input type="text" class="form-control" id="name" required />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Passkey</label>
+            <input type="text" class="form-control" id="passkey" required />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Perusahaan</label>
+            <input type="text" class="form-control" id="perusahaan" required />
+          </div>
+          <div class="mb-2">
+            <label class="form-label">Jabatan</label>
+            <input type="text" class="form-control" id="jabatan" required />
+          </div>
+
+          <!-- Checkbox untuk Asis -->
+          <div class="mb-2">
+            <label class="form-label">Akses Menu</label>
+            <div class="form-check">
+              <input class="form-check-input asis-check" type="checkbox" value="menu-users" id="menuUsers" />
+              <label class="form-check-label" for="menuUsers">Users</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input asis-check" type="checkbox" value="menu-person" id="menuPerson" />
+              <label class="form-check-label" for="menuPerson">Person</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input asis-check" type="checkbox" value="menu-admin" id="menuAdmin" />
+              <label class="form-check-label" for="menuAdmin">Admin</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input asis-check" type="checkbox" value="menu-izusu" id="menuIzusu" />
+              <label class="form-check-label" for="menuIzusu">Izusu</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input asis-check" type="checkbox" value="menu-gsais" id="menuGsais" />
+              <label class="form-check-label" for="menuGsais">GSAIS</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input asis-check" type="checkbox" value="menu-public" id="menuPublic" />
+              <label class="form-check-label" for="menuPublic">Public</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Simpan</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  /**
+   * Menyegarkan data tabel pengguna dengan mengambil data terbaru dari Google Apps Script.
+   * Menampilkan layar loading saat proses berlangsung.
+   *
+   * @function refreshTable
+   * @returns {void}
+   */
+  function refreshTable() {
+    showLoadingScreen("Menyegarkan Data ...");
+    google.script.run
+      .withSuccessHandler(function (users) {
+        console.warn("users", users);
+        table.clear().rows.add(users).draw();
+        showLoadingScreen();
+      })
+      .getUsers();
+  }
+
+  /**
+   * Menampilkan modal tambah pengguna dan mereset form isian.
+   *
+   * @function showAddModal
+   * @returns {void}
+   */
+  function showAddModal() {
+    $("#userForm")[0].reset();
+    $("#uid").val("");
+    $("#userModal").modal("show");
+  }
+
+  /**
+   * Menampilkan data pengguna pada modal untuk proses edit.
+   * Data yang dienkripsi akan didekripsi terlebih dahulu sebelum ditampilkan.
+   * Checkbox menu akses akan disesuaikan berdasarkan array `asis`.
+   *
+   * @function editUser
+   * @param {Object} user - Objek data pengguna yang akan diedit.
+   * @param {string} user.uid - UID pengguna.
+   * @param {string} user.passkey - Kata sandi terenkripsi.
+   * @param {string} user.fullname - Nama lengkap terenkripsi.
+   * @param {string} user.name - Username terenkripsi.
+   * @param {string} user.perusahaan - Nama perusahaan terenkripsi.
+   * @param {string} user.jabatan - Jabatan pengguna terenkripsi.
+   * @param {string[]} [user.asis] - Daftar menu yang diizinkan untuk pengguna.
+   * @returns {void}
+   */
+  function editUser(user) {
+    $("#uid").val(user.uid);
+    $("#passkey").val(decryptValue(user.passkey));
+    $("#fullname").val(decryptValue(user.fullname));
+    $("#name").val(decryptValue(user.name));
+    $("#perusahaan").val(decryptValue(user.perusahaan));
+    $("#jabatan").val(decryptValue(user.jabatan));
+
+    // Reset semua checkbox menu akses
+    $(".asis-check").prop("checked", false);
+    if (Array.isArray(user.asis)) {
+      user.asis.forEach(menu => {
+        $(`.asis-check[value="${menu}"]`).prop("checked", true);
+      });
+    }
+
+    $("#userModal").modal("show");
+  }
+
+  /**
+   * Menghapus pengguna berdasarkan UID dengan konfirmasi SweetAlert.
+   * Setelah berhasil, tabel akan disegarkan ulang.
+   *
+   * @function deleteUser
+   * @param {string} uid - UID pengguna yang akan dihapus.
+   * @returns {void}
+   */
+  function deleteUser(uid) {
+    Swal.fire({
+      title: "Hapus User?",
+      text: "Data akan disembunyikan dari daftar pengguna.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, hapus!",
+      cancelButtonText: "Batal",
+      reverseButtons: true
+    }).then(result => {
+      if (result.isConfirmed) {
+        google.script.run
+          .withSuccessHandler(() => {
+            Swal.fire("Berhasil!", "User telah dihapus.", "success");
+            refreshTable();
+          })
+          .deleteUser(uid);
+      }
+    });
+  }
+
+  /**
+   * Event handler untuk submit form pengguna.
+   * Melakukan validasi, enkripsi data, dan memanggil fungsi Apps Script
+   * untuk menyimpan (tambah atau update) data pengguna.
+   *
+   * @function onUserFormSubmit
+   * @param {Event} e - Event submit form.
+   * @returns {void}
+   */
+  $("#userForm").on("submit", function (e) {
+    showLoadingScreen("Menyimpan Informasi User ...");
+    e.preventDefault();
+
+    // Mengambil nilai dari checkbox akses sistem
+    const selectedAsis = $(".asis-check:checked")
+      .map(function () {
+        return this.value;
+      })
+      .get();
+
+    // Membuat objek user dengan data terenkripsi
+    const user = {
+      uid: sanitizeInput($("#uid").val() || Date.now().toString()),
+      fullname: encryptValue(sanitizeInput($("#fullname").val())),
+      name: encryptValue(sanitizeInput($("#name").val())),
+      passkey: encryptValue(sanitizeInput($("#passkey").val())),
+      perusahaan: encryptValue(sanitizeInput($("#perusahaan").val())),
+      jabatan: encryptValue(sanitizeInput($("#jabatan").val())),
+      asis: encryptValue(JSON.stringify(selectedAsis))
+    };
+
+    // Menentukan apakah data akan ditambahkan atau diperbarui
+    if ($("#uid").val()) {
+      google.script.run
+        .withSuccessHandler(() => {
+          showLoadingScreen();
+          $("#userModal").modal("hide");
+          refreshTable();
+        })
+        .updateUser(user);
+    } else {
+      google.script.run
+        .withSuccessHandler(() => {
+          showLoadingScreen();
+          $("#userModal").modal("hide");
+          refreshTable();
+        })
+        .addUser(user);
+    }
+  });
+
+  /**
+   * Inisialisasi DataTable dan ambil data pengguna saat dokumen siap.
+   * Menambahkan kolom aksi (edit & hapus), serta merender data terenkripsi.
+   *
+   * @function ready
+   * @returns {void}
+   */
+  $(document).ready(function () {
+    table = $("#userTable").DataTable({
+      responsive: true,
+      autoWidth: true,
+      columnDefs: [
+        { responsivePriority: 1, targets: -1 }, // Kolom aksi selalu terlihat
+        { responsivePriority: 2, targets: 1 } // Kolom nama user jadi prioritas kedua
+      ],
+      columns: [
+        { data: "uid" },
+        { data: "fullname", render: data => decryptValue(data) },
+        { data: "name", render: data => decryptValue(data) },
+        { data: "perusahaan", render: data => decryptValue(data) },
+        { data: "jabatan", render: data => decryptValue(data) },
+        { data: "asis" }, // Jika ingin bisa terbaca, tambahkan parser/decrypt
+        {
+          data: null,
+          orderable: false,
+          searchable: false,
+          render: function (data, type, row) {
+            return `<div class="input-group">
+            <button class="btn btn-warning btn-sm me-1" onclick='editUser(${JSON.stringify(row)})'>
+              <i class="fa-solid fa-user-tag"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" onclick='deleteUser("${row.uid}")'>
+              <i class="fa-solid fa-user-xmark"></i>
+            </button>
+          </div>`;
+          }
+        }
+      ]
+    });
+
+    // Memuat data awal tabel
+    refreshTable();
+  });
+</script>

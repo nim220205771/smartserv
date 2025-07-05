@@ -1,0 +1,1071 @@
+<style>
+  #image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .img-slot,
+  .imgperbaikan-slot {
+    flex: 1 0 auto;
+    text-align: center;
+  }
+  .img-slot img,
+  .imgperbaikan-slot img {
+    max-height: 150px;
+    max-width: 100%;
+    object-fit: cover;
+  }
+
+  .img-wrapper,
+  .imgperbaikan-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .delete-btn {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background: rgba(255, 0, 0, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer;
+  }
+</style>
+
+<div class="container mx-0 px-0 placeholder-grow">
+  <div class="row">
+    <div class="col-12 col-sm-7">
+      <h3 class="mb-3 placeholder" onclick="ActiveMenu('app_laporan')">
+        <i class="fa fa-clipboard-list"></i>
+        Laporan Kendaraan
+      </h3>
+    </div>
+    <div class="col-12 col-sm-5 d-flex align-items-center justify-content-end">
+      <button class="btn btn-primary mb-3 float-end placeholder menu-addLaporan" onclick="showForm()">
+        <i class="fa fa-plus"></i>
+        Tambah Laporan
+      </button>
+    </div>
+  </div>
+
+  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+    <button class="nav-link d-flex flex-row active" id="nav-open-tab" data-bs-toggle="tab" data-bs-target="#nav-open" type="button" role="tab" aria-controls="nav-open" aria-selected="true">
+      <i class="fa-solid fa-car-burst"></i>
+      &nbsp;Open
+    </button>
+    <button class="nav-link d-flex flex-row" id="nav-progress-tab" data-bs-toggle="tab" data-bs-target="#nav-progress" type="button" role="tab" aria-controls="nav-progress" aria-selected="false">
+      <i class="fa-solid fa-car-on"></i>
+      &nbsp;Progress
+    </button>
+    <button class="nav-link d-flex flex-row" id="nav-close-tab" data-bs-toggle="tab" data-bs-target="#nav-close" type="button" role="tab" aria-controls="nav-close" aria-selected="false">
+      <i class="fa-solid fa-car"></i>
+      &nbsp;Close
+    </button>
+  </div>
+
+  <div class="tab-content placeholder-grow" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-open" role="tabpanel" aria-labelledby="nav-open-tab" tabindex="0">
+      <div class="bg-white">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive placeholder">
+              <table class="display table table-sm table-bordered w-100" id="laporanTable_open" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th>UID</th>
+                    <th>User</th>
+                    <th>Tanggal</th>
+                    <th>Plat</th>
+                    <th>Deskripsi</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-progress" role="tabpanel" aria-labelledby="nav-progress-tab" tabindex="0">
+      <div class="bg-white">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive placeholder">
+              <table class="display table table-sm table-bordered w-100" id="laporanTable_progress" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th>UID</th>
+                    <th>User</th>
+                    <th>Tanggal</th>
+                    <th>Plat</th>
+                    <th>Deskripsi</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane fade" id="nav-close" role="tabpanel" aria-labelledby="nav-close-tab" tabindex="0">
+      <div class="bg-white">
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive placeholder">
+              <table class="display table table-sm table-bordered w-100" id="laporanTable_close" style="width: 100%">
+                <thead>
+                  <tr>
+                    <th>UID</th>
+                    <th>User</th>
+                    <th>Tanggal</th>
+                    <th>Plat</th>
+                    <th>Deskripsi</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Edit Form -->
+<div class="modal fade" id="laporanModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <form id="laporanForm" class="modal-content">
+      <div class="modal-header">
+        <h5 id="no_uid" class="modal-title">Form Laporan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-3">
+        <input type="hidden" id="uid" />
+        <div class="card menu-public menu-gsais menu-izusu">
+          <div class="card-header">
+            <i class="fa-solid fa-car-burst"></i>
+            Informasi Kerusakan KR
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <label>User</label>
+                <input type="text" class="form-control" id="user" placeholder="isi dengan nama pelapor" required />
+              </div>
+              <div class="col-sm-6">
+                <label>Tanggal Lapor</label>
+                <input type="date" class="form-control" id="tanggal_lapor" required />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <label>Odo Meter</label>
+                <input type="number" class="form-control" id="odo_meter" placeholder="123456" />
+              </div>
+              <div class="col-sm-6">
+                <label>Plat Kendaraan</label>
+                <input type="text" class="form-control" id="plat_kr" placeholder="A 1234 ABC" />
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label>Deskripsi</label>
+                <textarea class="form-control" id="deskripsi" placeholder="Uraikan kendala atau kerusakan yang dialami"></textarea>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <label>Dokumentasi Kerusakan</label>
+                <div class="form-control d-flex justify-content-evenly align-items-center" placeholder="Uraikan kendala atau kerusakan yang dialami" id="packet_dokumentasi">
+                  <img id="setimg" src="" class="img-thumbnail m-1" style="max-height: 150px; width: auto" />
+                  <input type="file" id="fileInput" accept="image/*" style="display: none" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card menu-izusu menu-gsais menu_perbaikan">
+          <div class="card-header">
+            <i class="fa-solid fa-car-on"></i>
+            Rencana Perbaikan
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <label>Rencana Perbaikan (JSON)</label>
+                <div class="form-control" id="rencana_perbaikan"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <label>Tanggal Perbaikan</label>
+                <input type="date" class="form-control" id="tanggal_perbaikan" />
+              </div>
+              <div class="col-sm-6">
+                <label>Status Perbaikan</label>
+                <!-- <input type="text" class="form-control" id="status_perbaikan" /> -->
+                <select class="form-control" id="status_perbaikan" disabled>
+                  <option value="Open" style="color: red">Open</option>
+                  <option value="Proccess" style="color: blue">Proccess</option>
+                  <option value="Close" style="color: green">Close</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12">
+                <label>Dokumentasi Perbaikan</label>
+                <div class="form-control d-flex justify-content-evenly align-items-center" placeholder="Uraikan kendala atau kerusakan yang dialami" id="packet_dokumentasiperbaikan">
+                  <img id="setimgperbaikan" src="" class="img-thumbnail m-1" style="max-height: 150px; width: auto" />
+                  <input type="file" id="fileInputPerbaikan" accept="image/*" style="display: none" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card menu-gsais menu_refrensi">
+          <div class="card-header">
+            <i class="fa-solid fa-car-on"></i>
+            Berkas Perbaikan
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-6">
+                <label>Ref RAB</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Nomor RAB IZUSU" disabled aria-describedby="url_rab" id="ref_rab" />
+                  <button class="btn btn-outline-secondary" type="button" id="url_rab"><i class="fa-solid fa-file-pdf"></i></button>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Ref SPK</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Nomor SPK AIS" disabled aria-describedby="url_spk" id="ref_spk" />
+                  <button class="btn btn-outline-secondary" type="button" id="url_spk"><i class="fa-solid fa-file-pdf"></i></button>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <label>Ref BA</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Nomor BA AIS - IZUSU" disabled aria-describedby="url_ba" id="ref_ba" />
+                  <button class="btn btn-outline-secondary" type="button" id="url_ba"><i class="fa-solid fa-file-pdf"></i></button>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <label>Ref Invoice</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" placeholder="Nomor Invoice" disabled aria-describedby="url_invoice" id="ref_invoice" />
+                  <button class="btn btn-outline-secondary" type="button" id="url_invoice"><i class="fa-solid fa-file-pdf"></i></button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-success" type="submit">
+            <i class="fa fa-save"></i>
+            Simpan
+          </button>
+          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">
+            <i class="fa-solid fa-square-xmark"></i>
+            Tutup
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal View Form -->
+<div class="modal fade" id="viewLaporanModal" tabindex="-1" aria-labelledby="viewLaporanLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- Tempatkan layout dari kamu di sini -->
+        <div id="laporanDetailContent"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  /**
+   * Memuat data laporan dari server, memprosesnya ke dalam tiga kategori
+   * berdasarkan status ('Open', 'Proccess', 'Selesai'), lalu menampilkan
+   * masing-masing ke dalam DataTable yang sesuai.
+   *
+   * @function refreshTable
+   * @returns {void}
+   */
+  function refreshTable() {
+    showLoadingScreen("Memuat data laporan...");
+
+    google.script.run
+      .withSuccessHandler(function (data) {
+        showLoadingScreen(); // Sembunyikan loading
+        data = JSON.parse(data);
+        laporanData = data;
+
+        if (!Array.isArray(data) || data.length === 0 || typeof data[0] !== "object") {
+          console.error("Data kosong atau tidak sesuai format:", data);
+          $("#main-content .placeholder").removeClass("placeholder");
+          return;
+        }
+
+        // Inisialisasi array untuk setiap status
+        const tableDataOpen = [];
+        const tableDataProgress = [];
+        const tableDataClose = [];
+
+        // Loop data dan alokasikan ke tabel yang sesuai
+        data.forEach((item, index) => {
+          const row = [
+            index + 1,
+            item.user,
+            formatDateToDDMMYYYY(item.tanggal_lapor),
+            item.odo_meter,
+            item.plat_kr,
+            item.status_perbaikan,
+            `
+            <div class="input-group">
+              <button class="btn btn-info btn-sm" onclick='viewLaporan(${JSON.stringify(item)})'>
+                <i class="fa fa-eye"></i>
+              </button>
+              <button class="btn btn-warning btn-sm" onclick='showForm(${JSON.stringify(item)})'>
+                <i class="fa fa-edit"></i>
+              </button>
+              <button class="btn btn-danger btn-sm" onclick='deleteItem("${item.uid}")'>
+                <i class="fa fa-trash"></i>
+              </button>
+            </div>
+          `
+          ];
+
+          switch (item.status_perbaikan) {
+            case "Open":
+              tableDataOpen.push(row);
+              break;
+            case "Progress":
+              tableDataProgress.push(row);
+              break;
+            case "Close":
+              tableDataClose.push(row);
+              break;
+            default:
+              console.warn("Status tidak dikenal:", item.status_perbaikan);
+          }
+        });
+
+        // Render DataTable untuk masing-masing status
+        const updateTable = (selector, data) => {
+          const table = $(selector).DataTable({
+            responsive: true,
+            autoWidth: true,
+            destroy: true // penting jika table sudah pernah diinisialisasi
+          });
+          table.clear().rows.add(data).draw();
+        };
+
+        updateTable("#laporanTable_open", tableDataOpen);
+        updateTable("#laporanTable_progress", tableDataProgress);
+        updateTable("#laporanTable_close", tableDataClose);
+
+        // Hilangkan placeholder
+        $("#main-content .placeholder").removeClass("placeholder");
+      })
+      .withFailureHandler(function (err) {
+        showLoadingScreen();
+        console.error("Gagal memuat data laporan:", err.message);
+        Swal.fire("Gagal!", "Terjadi kesalahan saat memuat data.", "error");
+      })
+      .getLaporan();
+  }
+
+  /**
+   * Menampilkan dan mengisi form laporan.
+   * Jika `data` kosong, maka form akan di-reset dan diisi default (tanggal hari ini, nama user, status "Open").
+   * Jika `data` terisi, maka form akan diisi dengan data laporan yang ada, termasuk gambar dan checklist.
+   *
+   * @param {Object} [data={}] - Data laporan yang akan dimasukkan ke dalam form. Jika kosong, dianggap input baru.
+   * @property {string} [data.uid] - ID unik laporan.
+   * @property {string} [data.user] - Nama user pelapor.
+   * @property {string} [data.tanggal_lapor] - Tanggal laporan dalam format ISO.
+   * @property {string} [data.odo_meter] - Odo meter kendaraan.
+   * @property {string} [data.plat_kr] - Plat kendaraan.
+   * @property {string} [data.deskripsi] - Deskripsi masalah.
+   * @property {string} [data.status_perbaikan] - Status perbaikan ("Open", "Proccess", "Selesai").
+   * @property {string} [data.image_lapor] - JSON string berisi array URL gambar laporan.
+   * @property {string} [data.image_perbaikan] - JSON string berisi array URL gambar perbaikan.
+   * @property {string} [data.rencana_perbaikan] - JSON string berisi array rencana perbaikan yang dipilih.
+   *
+   * @returns {void}
+   */
+  function showForm(data = null) {
+    $("#laporanForm")[0].reset();
+
+    user_role = localStorage.user_role.split(",");
+    ensureUserUID(auth);
+
+    $("#user").prop("disabled", false);
+    $("#tanggal_lapor").prop("disabled", false);
+    $("#odo_meter").prop("disabled", false);
+    $("#plat_kr").prop("disabled", false);
+    $("#uid").prop("disabled", false);
+    $("#deskripsi").prop("disabled", false);
+    $("#rencana_perbaikan").prop("disabled", false);
+
+    if (data == null) {
+      let today = new Date();
+      let year = today.getFullYear();
+      let month = String(today.getMonth() + 1).padStart(2, "0");
+      let day = String(today.getDate()).padStart(2, "0");
+      let formattedDate = `${year}-${month}-${day}`;
+
+      $("#tanggal_lapor").val(formattedDate);
+      $("#user").val(localStorage.user_fullname);
+      $("#status_perbaikan").val("Open").change();
+
+      $(".menu_perbaikan,.menu_refrensi").hide();
+
+      const imageData = [];
+      const imgTags = $("#packet_dokumentasi img").toArray();
+      const uploadableImages = imgTags.filter(img => img.id !== "setimg-slot" && (img.src.startsWith("data:image/jpeg") || img.src.startsWith("https://")));
+      $(uploadableImages).remove();
+
+      $("#packet_dokumentasi").html(`<img id="setimg" src="" class="img-thumbnail m-1" style="max-height: 150px; width: auto" /><input type="file" id="fileInput" accept="image/*" style="display: none" />`);
+
+      $("#setimg").prop("src", setimgJPG);
+
+      $("#setimg").wrap('<div class="img-slot" id="setimg-slot"></div>');
+
+      
+        $("#user").prop("readonly", false);
+        $("#tanggal_lapor").prop("readonly", false);
+        $("#odo_meter").prop("readonly", false);
+        $("#plat_kr").prop("readonly", false);
+        $("#uid").prop("readonly", false);
+        $("#deskripsi").prop("readonly", false);
+
+    } else {
+      currentLaporanData = { ...data };
+
+      for (const key in data) {
+        $(`#${key}`).val(data[key]);
+      }
+
+      $("#user").val(data.user);
+      $("#tanggal_lapor").val(data.tanggal_lapor.split("T")[0]);
+      $("#odo_meter").val(data.odo_meter);
+      $("#plat_kr").val(data.plat_kr);
+      $("#uid").val(data.uid);
+      $("#deskripsi").val(data.deskripsi);
+      $("#status_perbaikan").val(data.status_perbaikan).change();
+
+      imageLapor = JSON.parse(data.image_lapor || "[]");
+      const renderImages = imageLapor => imageLapor.map(url => `<img src="${convertGoogleDriveLinkToImgTag(url)}" class="img-thumbnail m-1" style="height:150px;" onclick="window.open('${url}', '_blank');">`).join("");
+      $("#packet_dokumentasi").html(renderImages(imageLapor));
+
+      const rencana = JSON.parse(data.rencana_perbaikan || "[]");
+      $("#rencana_perbaikan").html(
+        allOptions
+          .map(
+            option => `
+            <div class="form-check">
+              <input class="form-check-input chk_rencana" type="checkbox" ${rencana.includes(option) ? "checked" : ""} />
+              <label class="form-check-label">${option}</label>
+            </div>`
+          )
+          .join("")
+      );
+
+      imagePerbaikan = JSON.parse(data.image_perbaikan || "[]");
+      if (imagePerbaikan.length > 0) {
+        $("#packet_dokumentasiperbaikan").html(renderImages(imagePerbaikan));
+      }
+
+      if (data.status_perbaikan != "Open") {
+        $("#user").prop("disabled", true);
+        $("#tanggal_lapor").prop("disabled", true);
+        $("#odo_meter").prop("disabled", true);
+        $("#plat_kr").prop("disabled", true);
+        $("#uid").prop("disabled", true);
+        $("#deskripsi").prop("disabled", true);
+      }
+
+      checkUserAccess();
+    }
+
+    $("#laporanModal").modal("show");
+  }
+
+  /**
+   * Mengatur nilai `status_perbaikan` berdasarkan isi form:
+   * - Jika semua field referensi (`#ref_rab`, `#ref_spk`, `#ref_ba`, `#ref_invoice`) terisi → status "Close".
+   * - Jika ada checkbox rencana perbaikan yang dicentang → status "Proccess".
+   * - Jika tidak ada yang dicentang → status "Open".
+   *
+   * @function updateStatusPerbaikan
+   * @returns {void}
+   */
+  function updateStatusPerbaikan() {
+    const allRefsFilled = ["#ref_rab", "#ref_spk", "#ref_ba", "#ref_invoice"].every(id => {
+      return $(id).val().trim() !== "";
+    });
+
+    if (allRefsFilled) {
+      $("#status_perbaikan").val("Close");
+      return;
+    }
+
+    const anyChecked = $('#rencana_perbaikan input[type="checkbox"]').is(":checked");
+    if (anyChecked) {
+      $("#status_perbaikan").val("Proccess");
+    } else {
+      $("#status_perbaikan").val("Open");
+    }
+  }
+
+  /**
+   * Event handler untuk pengiriman form laporan.
+   * Menangani proses:
+   * - Mengumpulkan data form
+   * - Membandingkan perubahan data dengan `currentLaporanData`
+   * - Mengunggah gambar (jika ada)
+   * - Menentukan apakah data akan disimpan sebagai update atau entri baru
+   * - Menampilkan feedback kepada user melalui SweetAlert2
+   *
+   * @event submit
+   * @memberof #laporanForm
+   * @async
+   * @returns {void}
+   */
+  $("#laporanForm").on("submit", async function (e) {
+    e.preventDefault();
+
+    // 🔄 Kumpulkan input dari form
+    const item = { status_perbaikan: "open" };
+    $("#laporanForm :input").each(function () {
+      if (this.id) item[this.id] = $(this).val();
+    });
+
+    // 🔍 Identifikasi field yang mengalami perubahan
+    const changedFields = {};
+    for (const key in item) {
+      if (!currentLaporanData || item[key] != currentLaporanData[key]) {
+        changedFields[key] = item[key];
+      }
+    }
+
+    const checkedLabels = [];
+    $("#rencana_perbaikan .chk_rencana:checked").each(function () {
+      const label = $(this).closest(".form-check").find("label").text().trim();
+      checkedLabels.push(label);
+    });
+    item["rencana_perbaikan"] = JSON.stringify(checkedLabels);
+
+    // 🖼️ Proses upload gambar laporan (jika ada)
+    const imageData = [];
+    const imgTags = $("#packet_dokumentasi img").toArray();
+    const uploadableImages = imgTags.filter(img => img.id !== "setimg-slot" && (img.src.startsWith("data:image/jpeg") || img.src.startsWith("https://"))).map(img => img.src);
+    item["image_lapor"] = uploadableImages.length > 0 ? JSON.stringify(uploadableImages) : "";
+
+    // 🛠️ Proses upload gambar perbaikan (jika ada)
+    const imageDataPerbaikan = [];
+    const imgTagsPerbaikan = $("#packet_dokumentasiperbaikan img").toArray();
+    const uploadableImagesPerbaikan = imgTagsPerbaikan.filter(img => img.id !== "setimgperbaikan-slot" && (img.src.startsWith("data:image/jpeg") || img.src.startsWith("https://"))).map(img => img.src);
+    item["image_perbaikan"] = uploadableImagesPerbaikan.length > 0 ? JSON.stringify(uploadableImagesPerbaikan) : "";
+
+    // Upload gambar laporan
+    if (uploadableImages.length > 0 && (!currentLaporanData.image_lapor || changedFields.hasOwnProperty("image_lapor"))) {
+      let current = 0;
+
+      await Swal.fire({
+        title: "Mengunggah Gambar...",
+        html: `<div id="uploadProgressText" class="mb-2">0 / ${uploadableImages.length}</div>
+             <div class="progress">
+               <div id="uploadProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                    role="progressbar" style="width: 0%"></div>
+             </div>`,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: async () => {
+          Swal.showLoading();
+
+          for (const img of uploadableImages) {
+            const base64 = img.src;
+            const fileName = `imgKerusakan_${Date.now()}.jpg`;
+
+            try {
+              const url = await new Promise((resolve, reject) => {
+                google.script.run.withSuccessHandler(resolve).withFailureHandler(reject).uploadBase64ImageToDrive(base64, fileName);
+              });
+
+              imageData.push(url);
+              current++;
+
+              const percent = Math.round((current / uploadableImages.length) * 100);
+              $("#uploadProgressText").text(`${current} / ${uploadableImages.length}`);
+              $("#uploadProgressBar").css("width", `${percent}%`);
+            } catch (err) {
+              Swal.close();
+              Swal.fire("Upload Gagal", err.message || "Gagal mengunggah salah satu gambar.", "error");
+              throw err;
+            }
+          }
+
+          Swal.close();
+        }
+      });
+
+      item.image_lapor = JSON.stringify(imageData);
+      changedFields["image_lapor"] = item.image_lapor;
+    }
+
+    // Upload gambar perbaikan
+    if (uploadableImagesPerbaikan.length > 0 && (!currentLaporanData.image_perbaikan || changedFields.hasOwnProperty("image_perbaikan"))) {
+      let current = 0;
+
+      await Swal.fire({
+        title: "Mengunggah Gambar Perbaikan...",
+        html: `<div id="uploadProgressText" class="mb-2">0 / ${uploadableImagesPerbaikan.length}</div>
+             <div class="progress">
+               <div id="uploadProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" 
+                    role="progressbar" style="width: 0%"></div>
+             </div>`,
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        didOpen: async () => {
+          Swal.showLoading();
+
+          for (const img of uploadableImagesPerbaikan) {
+            const base64 = img.src;
+            const fileName = `imgPerbaikan_${Date.now()}.jpg`;
+
+            try {
+              const url = await new Promise((resolve, reject) => {
+                google.script.run.withSuccessHandler(resolve).withFailureHandler(reject).uploadBase64ImageToDrive(base64, fileName);
+              });
+
+              imageDataPerbaikan.push(url);
+              current++;
+
+              const percent = Math.round((current / uploadableImagesPerbaikan.length) * 100);
+              $("#uploadProgressText").text(`${current} / ${uploadableImagesPerbaikan.length}`);
+              $("#uploadProgressBar").css("width", `${percent}%`);
+            } catch (err) {
+              Swal.close();
+              Swal.fire("Upload Gagal", err.message || "Gagal mengunggah salah satu gambar.", "error");
+              throw err;
+            }
+          }
+
+          Swal.close();
+        }
+      });
+
+      item.image_perbaikan = JSON.stringify(imageDataPerbaikan);
+      changedFields["image_perbaikan"] = item.image_perbaikan;
+    }
+
+    // ⛔ Jika tidak ada perubahan, tidak perlu submit
+    if (item.uid && Object.keys(changedFields).length === 0) {
+      Swal.fire("Tidak Ada Perubahan", "Data tidak mengalami perubahan.", "info");
+      return;
+    }
+
+    // 💾 Simpan data (update / add)
+    showLoadingScreen("Menyimpan data...");
+    const onSuccess = () => {
+      $("#laporanModal").modal("hide");
+      showLoadingScreen(); // hide
+      Swal.fire({
+        icon: "success",
+        title: "Berhasil",
+        text: "Data telah disimpan.",
+        timer: 3000,
+        timerProgressBar: true,
+        showConfirmButton: false
+      });
+      refreshTable();
+    };
+
+    const onFailure = err => {
+      showLoadingScreen();
+      Swal.fire("Gagal", err.message, "error");
+    };
+
+    if (item.uid) {
+      google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).updateLaporan(item);
+    } else {
+      google.script.run.withSuccessHandler(onSuccess).withFailureHandler(onFailure).addLaporan(item);
+    }
+  });
+
+  /**
+   * Menampilkan konfirmasi penghapusan data menggunakan SweetAlert2.
+   * Jika disetujui, memanggil fungsi `deleteLaporan(uid)` melalui Google Apps Script.
+   *
+   * @function deleteItem
+   * @param {string} uid - ID unik dari data laporan yang akan dihapus.
+   * @returns {void}
+   */
+  function deleteItem(uid) {
+    Swal.fire({
+      title: "Hapus Data?",
+      text: "Data yang dihapus tidak bisa dikembalikan.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Ya, Hapus!",
+      cancelButtonText: "Batal"
+    }).then(result => {
+      if (result.isConfirmed) {
+        showLoadingScreen("Menghapus data...");
+        google.script.run
+          .withSuccessHandler(() => {
+            showLoadingScreen(); // hide
+            Swal.fire({
+              icon: "success",
+              title: "Terhapus!",
+              text: "Data telah dihapus.",
+              timer: 3000,
+              timerProgressBar: true,
+              showConfirmButton: false
+            });
+            refreshTable();
+          })
+          .withFailureHandler(err => {
+            showLoadingScreen();
+            Swal.fire("Gagal", err.message, "error");
+          })
+          .deleteLaporan(uid);
+      }
+    });
+  }
+
+  /**
+   * Menampilkan detail laporan dalam bentuk readonly menggunakan Bootstrap modal.
+   * Gambar akan dirender sebagai thumbnail, checkbox rencana perbaikan ditampilkan dalam kondisi non-editable.
+   *
+   * @function viewLaporan
+   * @param {Object} item - Objek data laporan yang akan ditampilkan.
+   * @param {string} item.user - Nama user pelapor.
+   * @param {string} item.tanggal_lapor - Tanggal laporan dibuat.
+   * @param {string} item.odo_meter - Nilai odometer saat pelaporan.
+   * @param {string} item.plat_kr - Nomor plat kendaraan.
+   * @param {string} item.deskripsi - Deskripsi kerusakan kendaraan.
+   * @param {string[]} item.image_lapor - Array URL gambar kerusakan (dalam bentuk JSON string).
+   * @param {string[]} item.image_perbaikan - Array URL gambar perbaikan (dalam bentuk JSON string).
+   * @param {string[]} item.rencana_perbaikan - Array string rencana perbaikan (JSON string).
+   * @param {string} item.tanggal_perbaikan - Tanggal pelaksanaan perbaikan.
+   * @param {string} item.status_perbaikan - Status apakah sudah diperbaiki atau belum ("Selesai" atau selainnya).
+   * @returns {void}
+   */
+  function viewLaporan(item) {
+    viewLog && console.warn("item", item);
+    const imageLapor = JSON.parse(item.image_lapor || "[]");
+    const imagePerbaikan = JSON.parse(item.image_perbaikan || "[]");
+    const rencana = JSON.parse(item.rencana_perbaikan || "[]");
+    ensureUserUID(auth);
+
+    const renderImages = imageArray => imageArray.map(url => `<img src="${convertGoogleDriveLinkToImgTag(url)}" class="img-thumbnail m-1" style="height:150px;">`).join("");
+
+    const rencanaCheckboxes = allOptions
+      .map(
+        option => `
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" ${rencana.includes(option) ? "checked" : ""} disabled />
+      <label class="form-check-label">${option}</label>
+    </div>
+  `
+      )
+      .join("");
+
+    const html = `
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+        <span>USER</span>
+        <button type="button" class="float-end" data-bs-dismiss="modal" aria-label="Close">
+        <i class="fa-solid fa-xmark"></i>
+        </button>
+        </h5>
+
+        <div class="row"><label class="col-4 col-form-label">User</label><div class="col-8"><input type="text" readonly class="form-control-plaintext" value="${item.user}" /></div></div>
+        <div class="row"><label class="col-4 col-form-label">Tanggal</label><div class="col-8"><input type="text" readonly class="form-control-plaintext" value="${item.tanggal_lapor}" /></div></div>
+        <div class="row"><label class="col-4 col-form-label">KM</label><div class="col-8"><input type="text" readonly class="form-control-plaintext" value="${item.odo_meter}" /></div></div>
+        <div class="row"><label class="col-4 col-form-label">Plat KR</label><div class="col-8"><input type="text" readonly class="form-control-plaintext" value="${item.plat_kr}" /></div></div>
+        <div class="row"><label class="col-4 col-form-label">Diskripsi Kerusakan</label><div class="col-8"><input type="text" readonly class="form-control-plaintext" value="${item.deskripsi}" /></div></div>
+
+        <div class="text-center mt-3">${renderImages(imageLapor)}</div>
+
+        <h5 class="card-title mt-4"><span>RENCANA PERBAIKAN</span></h5>
+        ${rencanaCheckboxes}
+
+        <h5 class="card-title mt-4"><span>REALISASI PERBAIKAN & PENYELESAIAN</span></h5>
+        <div class="row"><label class="col-4 col-form-label">Tanggal</label><div class="col-8"><input type="text" readonly class="form-control-plaintext" value="${item.tanggal_perbaikan || "-"}" /></div></div>
+
+        <div class="text-center mt-3">${renderImages(imagePerbaikan)}</div>
+
+        <div class="row float-end mt-3">
+          <div class="col">
+            ${item.status_perbaikan === "Selesai" ? `<p class="btn btn-outline-success">SELESAI</p>` : `<p class="btn btn-outline-danger">BELUM</p>`}
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+    $("#laporanDetailContent").html(html);
+    $("#viewLaporanModal").modal("show");
+  }
+
+  /**
+   * Inisialisasi semua event dan plugin saat dokumen siap.
+   *
+   * - Menangani klik input gambar pelaporan dan perbaikan.
+   * - Menangani proses resize gambar menggunakan `<canvas>`.
+   * - Menampilkan pratinjau gambar.
+   * - Mengatur layout slot gambar secara dinamis.
+   * - Menyiapkan DataTable.
+   * - Menyiapkan event listener untuk checkbox dan input status.
+   */
+  $(document).ready(function () {
+    /**
+     * Membungkus tombol input gambar dengan container div.
+     */
+    $("#setimg").wrap('<div class="img-slot" id="setimg-slot"></div>');
+    $("#setimgperbaikan").wrap('<div class="imgperbaikan-slot" id="setimgperbaikan-slot"></div>');
+
+    /**
+     * Event: Klik pada gambar perbaikan untuk membuka input file.
+     */
+    $("#setimgperbaikan").on("click", function () {
+      $("#fileInputPerbaikan").click();
+    });
+
+    /**
+     * Event: Saat file dipilih untuk gambar perbaikan.
+     */
+    $("#fileInputPerbaikan").on("change", function (e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      if ($(".imgperbaikan-wrapper").length >= maxImages) return;
+
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        const img = new Image();
+        img.src = event.target.result;
+
+        img.onload = function () {
+          let width = img.width;
+          let height = img.height;
+
+          // Resize proporsional jika melebihi batas
+          if (width > maxWidth || height > maxHeight) {
+            const ratio = Math.min(maxWidth / width, maxHeight / height);
+            width = Math.round(width * ratio);
+            height = Math.round(height * ratio);
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+          const resizedDataUrl = canvas.toDataURL("image/jpeg", 0.8);
+
+          const imgWrapper = $('<div class="imgperbaikan-slot imgperbaikan-wrapper m-1">');
+          const newImg = $("<img>").attr("src", resizedDataUrl).addClass("img-thumbnail");
+
+          const deleteBtn = $('<button type="button" class="delete-btn">&times;</button>');
+          deleteBtn.on("click", function () {
+            imgWrapper.remove();
+            if ($(".imgperbaikan-wrapper").length < maxImages) {
+              $("#setimgperbaikan").show();
+            }
+            updateImageSlots("perbaikan");
+          });
+
+          imgWrapper.append(newImg).append(deleteBtn);
+          $("#setimgperbaikan-slot").before(imgWrapper);
+
+          if ($(".imgperbaikan-wrapper").length >= maxImages) {
+            $("#setimgperbaikan").hide();
+          }
+
+          updateImageSlots("perbaikan");
+        };
+      };
+      reader.readAsDataURL(file);
+      $(this).val(""); // reset file input
+    });
+
+    /**
+     * Inisialisasi DataTable dan gambar default, serta muat data.
+     */
+    $("#laporanTable").DataTable();
+    $("#setimg").prop("src", setimgJPG);
+    $("#setimgperbaikan").prop("src", setimgJPG);
+    refreshTable();
+
+    /**
+     * Event: Update status perbaikan saat checkbox rencana diubah.
+     */
+    $(document).on("change", '#rencana_perbaikan input[type="checkbox"]', updateStatusPerbaikan);
+
+    /**
+     * Event: Update status perbaikan saat referensi dokumen diisi.
+     */
+    $("#ref_rab, #ref_spk, #ref_ba, #ref_invoice").on("input", updateStatusPerbaikan);
+checkUserAccess()
+    // setInterval(checkUserAccess, 2000)
+  });
+
+  auth();
+
+  function checkUserAccess() {
+    const roles = (localStorage.user_role || "").split(",").map(role => role.trim());
+    viewLog && console.warn('checkUserAccess', roles)
+
+    const isAdmin = roles.includes("menu-admin");
+    const isPublic = roles.includes("menu-public");
+    const isIzusu = roles.includes("menu-izusu");
+    const isGsais = roles.includes("menu-gsais");
+
+
+
+    viewLog && console.warn('isAdmin', isAdmin)
+    viewLog && console.warn('isPublic', isPublic)
+    viewLog && console.warn('isIzusu', isIzusu)
+    viewLog && console.warn('isGsais', isGsais)
+
+
+
+    const $menuAdd = $(".menu-addLaporan");
+    const $menuInputPublic = ["#user", "#tanggal_lapor", "#odo_meter", "#plat_kr", "#deskripsi"];
+    const $menuInputIzusu = ["#tanggal_perbaikan"];
+
+    $menuInput = $.merge($menuInputPublic, $menuInputIzusu);
+    // Set semua input readonly
+    $($menuInput.join(",")).prop("readonly", true);
+
+    // Disable checkbox
+    $(".chk_rencana").prop("disabled", true);
+    viewLog && console.warn('sts', isPublic && isIzusu && !isAdmin)
+
+    if (isAdmin) {
+      // Admin selalu bisa lihat menu
+      $(".chk_rencana").prop("disabled", false);
+      $menuAdd.show();
+    } else if (isPublic && !isIzusu && !isGsais && !isAdmin) {
+      // Public juga bisa lihat
+      $menuAdd.show();
+    } else if (isPublic && isIzusu && !isGsais && !isAdmin) {
+      // Hanya izusu tanpa admin atau public
+      
+      $(".chk_rencana").prop("disabled", false);
+      $menuAdd.hide();
+    } else {
+      // Default: tidak boleh akses
+      $menuAdd.hide();
+    }
+  }
+
+  /**
+   * Event: Klik pada gambar pelaporan untuk membuka input file.
+   */
+  $(document).on("click", "#setimg", function (e) {
+    $("#fileInput").click();
+  });
+  /**
+   * Event: Saat file dipilih untuk gambar pelaporan.
+   */
+  $(document).on("change", "#fileInput", function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if ($(".img-wrapper").length >= maxImages) return;
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      const img = new Image();
+      img.src = event.target.result;
+
+      img.onload = function () {
+        let width = img.width;
+        let height = img.height;
+
+        // Resize proporsional jika melebihi batas
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = Math.min(maxWidth / width, maxHeight / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+        const resizedDataUrl = canvas.toDataURL("image/jpeg", 0.8);
+
+        const imgWrapper = $('<div class="img-slot img-wrapper m-1">');
+        const newImg = $("<img>").attr("src", resizedDataUrl).addClass("img-thumbnail");
+
+        const deleteBtn = $('<button type="button" class="delete-btn">&times;</button>');
+        deleteBtn.on("click", function () {
+          imgWrapper.remove();
+          if ($(".img-wrapper").length < maxImages) {
+            $("#setimg").show();
+          }
+          updateImageSlots();
+        });
+
+        imgWrapper.append(newImg).append(deleteBtn);
+        $("#setimg-slot").before(imgWrapper);
+
+        if ($(".img-wrapper").length >= maxImages) {
+          $("#setimg").hide();
+        }
+
+        updateImageSlots();
+      };
+    };
+    reader.readAsDataURL(file);
+    $(this).val(""); // reset file input
+  });
+
+  /**
+   * Mengatur ulang lebar slot gambar agar proporsional sesuai jumlah.
+   *
+   * @function updateImageSlots
+   * @param {string|null} target - Jika "perbaikan", atur untuk gambar perbaikan. Default untuk pelaporan.
+   */
+  function updateImageSlots(target = null) {
+    const totalSlots = (target ? $(".imgperbaikan-wrapper").length : $(".img-wrapper").length) + ((target ? $("#setimgperbaikan").is(":visible") : $("#setimg").is(":visible")) ? 1 : 0);
+    const widthPercent = 100 / totalSlots;
+    target ? $(".imgperbaikan-slot").css("width", widthPercent + "%") : $(".img-slot").css("width", widthPercent + "%");
+  }
+</script>

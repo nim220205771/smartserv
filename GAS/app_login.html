@@ -1,0 +1,91 @@
+<div class="row d-flex justify-content-center">
+  <!-- Login -->
+  <div class="col-md-6 col-12">
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex">
+          <div class="flex-shrink-0">
+            <!-- <img src="assets/images/AIS.png" alt="ᗩIS" width="100px" /> -->
+            <img src="https://drive.google.com/thumbnail?id=13K5s_auMdcIpmYY65tYlbJbYu8ruQmTA&sz=w150" alt="ᗩIS" width="100px" />
+          </div>
+          <div class="flex-grow-1 ms-3">
+            <div class="mb-3 row">
+              <label for="staticId" class="col-12 col-sm-4 col-form-label">Username</label>
+              <div class="col-12 col-sm-8">
+                <input type="text" class="form-control" id="staticId" placeholder="Masukan Username" value="" />
+              </div>
+            </div>
+            <div class="mb-3 row">
+              <label for="staticPassword" class="col-12 col-sm-4 col-form-label">Passkey</label>
+              <div class="col-12 col-sm-8">
+                <input type="password" class="form-control" id="staticPassword" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button type="button" class="btn btn-outline-success float-end" onclick="Login($('#staticId').val(),$('#staticPassword').val())">
+          <i class="fa-solid fa-right-to-bracket"></i>
+          &nbsp;LOGIN
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  /**
+   * Memastikan bahwa data pengguna default (`admin/admin123`) tersedia di sistem.
+   *
+   * Fungsi ini memanggil fungsi Google Apps Script `checkAndInsertDefaultUser`.
+   * Jika user default berhasil ditambahkan (atau sudah ada), akan menampilkan
+   * dialog informasi kepada pengguna. Dialog otomatis tertutup dalam 60 detik.
+   *
+   * @function ensureDefaultUser
+   * @returns {void}
+   */
+  function ensureDefaultUser() {
+    showLoadingScreen("Memeriksa data pengguna...");
+
+    google.script.run
+      .withSuccessHandler(function (res) {
+        showLoadingScreen(); // sembunyikan loading
+
+        if (res == true) {
+          let timerInterval;
+          Swal.fire({
+            title: "Default User Login",
+            html: "Username : <strong>admin</strong></br>Paskey : <strong>admin123</strong></br></br></br>I will close in <b></b> milliseconds.",
+            timer: 60000,
+            timerProgressBar: true,
+            showCloseButton: true,
+            didOpen: () => {
+              Swal.showLoading();
+              const timer = Swal.getPopup().querySelector("b");
+              timerInterval = setInterval(() => {
+                timer.textContent = `${Swal.getTimerLeft()}`;
+              }, 100);
+            },
+            willClose: () => {
+              clearInterval(timerInterval);
+            }
+          }).then(result => {
+            if (result.dismiss === Swal.DismissReason.timer) {
+              // Dialog tertutup otomatis
+            }
+          });
+          return;
+        }
+      })
+      .withFailureHandler(function (error) {
+        showLoadingScreen();
+        console.error("Gagal memanggil fungsi GAS:", error.message);
+        Swal.fire("Error", "Gagal memeriksa/menambahkan data pengguna.", "error");
+      })
+      .checkAndInsertDefaultUser();
+  }
+
+  // Jalankan saat page load (opsional)
+  $(document).ready(function () {
+    ensureDefaultUser(); // panggil fungsi saat halaman dimuat
+  });
+</script>

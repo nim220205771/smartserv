@@ -1,0 +1,320 @@
+<style>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    font-size: 11px;
+  }
+
+  .printableArea {
+    width: 190mm;
+    margin: 0 auto;
+    background: white;
+    box-sizing: border-box;
+    font-size: 11px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  th,
+  td {
+    /* border: 1px solid #000; */
+    padding: 4px;
+    word-wrap: break-word;
+  }
+
+  .logo {
+    height: 65px;
+  }
+
+  .signature-box {
+    height: 80px;
+    border: 1px solid hsl(0, 0%, 100%);
+  }
+
+  .section-title {
+    font-weight: bold;
+    margin-top: 12px;
+  }
+</style>
+
+
+<div class="d-flex placeholder-grow">
+  <button class="btn btn-success mb-3  ms-auto me-0" id="btnSavePDF"><i class="fa-solid fa-file-pdf"></i>&nbsp;Simpan
+    PDF</button>
+</div>
+
+<div class="printableArea p-3">
+  <!-- 1. HEADER -->
+  <div class="row">
+    <div class="col-7">
+      <img src="Izusu.jpg" alt="Logo" class="img-fluid logo">
+    </div>
+    <div class="col-5">
+      <div><strong>PT. Astra International - Isuzu</strong></div>
+      <div>HR Muhammad Branch</div>
+      <div class="d-flex" style="font-size: 11px;">
+        <div class="float-start">Jl. HR. Muhammad No.kav 8-10</div>
+        <div class="float-end ms-auto">Telp: (031) 7341000</div>
+      </div>
+      <div class="d-flex">
+        <div class="float-start">Surabaya</div>
+        <div class="float-end ms-auto">Fax: (031) 7328797</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. INFORMASI KONSUMEN -->
+  <div class="row border border-dark border-2 mb-2">
+
+    <div class="section-title">
+      <h5>Estimasi Biaya</h5>
+    </div>
+    <div class="col-7">
+      <table class="table table-sm table-borderless">
+        <tbody>
+          <tr>
+            <td class="w-25">Nama Konsumen</td>
+            <td>: MHI</td>
+          </tr>
+          <tr>
+            <td>Alamat</td>
+            <td>: Jalan Akses Toll, Pesantren, Tembelang, Santrean, Kec. Jombang, Kabupaten Jombang, Jawa Timur 61452
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-5">
+      <table class="table table-sm table-borderless">
+        <tbody>
+          <tr>
+            <td class="w-25">No Polisi</td>
+            <td>: MOBIL NIUNIU</td>
+          </tr>
+          <tr>
+            <td>No Rangka</td>
+            <td>: </td>
+          </tr>
+          <tr>
+            <td>KM</td>
+            <td>: </td>
+          </tr>
+          <tr>
+            <td>Warna/Tahun</td>
+            <td>: </td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row border border-dark border-2 mb-2">
+    <!-- 3. DETAIL PERMINTAAN BARANG -->
+    <table id="rabDetailTablePrint" class="table table-sm table-borderless">
+      <thead class="text-center">
+        <tr class="table-light">
+          <th style="width: 20%"></th>
+          <th style="width: 40%">PEKERJAAN</th>
+          <th style="width: 15%" class="text-end">PRICE LIST</th>
+          <th style="width: 5%">QTY</th>
+          <th style="width: 20%">Harga</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-center">JASA</td>
+          <td>Printer Epson L3110</td>
+          <td class="text-end">1.500.000</td>
+          <td class="text-center">2</td>
+          <td class="text-end">3.000.000</td>
+        </tr>
+
+        <!-- Tambah baris lain jika perlu -->
+
+        <!-- Baris Grand Total -->
+        <tr>
+          <td colspan="4" class="text-end"><strong>Grand Total</strong></td>
+          <td class="text-end"><strong>3.000.000</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. PENGESAHAN -->
+  <div class="row text-center mt-3">
+    <div class="col-6">
+      <div>Pemilik / Pembawa Kendaraan,</div>
+      <div class="signature-box my-3"></div>
+      <div>
+        (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+      </div>
+    </div>
+    <div class="col-6">
+      <div>Petugas Bengkel,</div>
+      <div class="signature-box my-3"></div>
+      <div>
+        (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+      </div>
+    </div>
+  </div>
+  <p class="mt-3 text-decoration-underline">Ketentuan:</p>
+
+</div>
+
+
+<script>
+  /**
+   * Handler utama saat halaman siap digunakan (DOM Ready).
+   *
+   * - Membaca data RAB dari `localStorage` (key: `rabDetailData`).
+   * - Mengurutkan item berdasarkan `item_jenis`, menyembunyikan duplikat.
+   * - Memasukkan data kendaraan dan tabel item ke DOM (dengan Grand Total).
+   * - Mengaktifkan tombol Simpan PDF (`#btnSavePDF`) setelah data terisi.
+   * - Saat tombol diklik:
+   *   - Mengonversi data menjadi `payload` untuk disimpan ke Spreadsheet via Apps Script.
+   *   - Menggunakan `html2pdf()` untuk mengunduh tampilan sebagai file PDF.
+   *   - Setelah simpan berhasil, navigasi ke menu `app_rab`.
+   *
+   * @fires html2pdf
+   * @fires google.script.run.saveRABDetailToSheet
+   * @returns {void}
+   */
+  $(document).ready(function () {
+    $('#btnSavePDF').prop('disabled', true).addClass('placeholder');
+    $('.logo').prop('src', isuzuJPG);
+    showLoadingScreen("Membaca data RAB ...");
+
+    const rawData = localStorage.getItem("rabDetailData");
+    if (!rawData) return;
+
+    const rabData = JSON.parse(rawData);
+    let items = rabData.items || [];
+    let dt = rabData.dt || [];
+
+    // Sortir dan hilangkan duplikat item_jenis
+    items.sort((a, b) => {
+      const j1 = a.item_jenis?.toLowerCase() || "";
+      const j2 = b.item_jenis?.toLowerCase() || "";
+      return j1.localeCompare(j2);
+    });
+    let lastJenis = "";
+    items = items.map(item => {
+      const jenis = item.item_jenis?.trim();
+      const output = { ...item };
+      if (jenis === lastJenis) output.item_jenis = "";
+      else lastJenis = jenis;
+      return output;
+    });
+
+    // Isi data kendaraan ke tampilan printable
+    $(".printableArea td:contains('MHI')").text(`: ${dt.constomer || ''}`);
+    $(".printableArea td:contains('Jalan Akses Toll')").text(`: ${dt.alamat || ''}`);
+    $(".printableArea td:contains('MOBIL NIUNIU')").text(`: ${dt.plat_kr || ''}`);
+    $(".printableArea td:contains('No Rangka')").next().text(`: ${dt.no_rangka || ''}`);
+    $(".printableArea td:contains('KM')").next().text(`: ${dt.odo_meter || ''}`);
+    $(".printableArea td:contains('Warna/Tahun')").next().text(`: ${dt.warna_tahun || ''}`);
+
+    const tbody = $("#rabDetailTablePrint tbody");
+    if (!tbody.length) return;
+    tbody.find("tr").not(":last").remove(); // kecuali Grand Total
+
+    // Render baris item
+    let grandTotal = 0;
+    items.forEach(item => {
+      const total = parseInt(item.item_total || "0", 10);
+      grandTotal += total;
+      const row = `
+      <tr>
+        <td class="text-center">${item.item_jenis || ""}</td>
+        <td>${item.item_nama || ""}</td>
+        <td class="text-end">${formatRupiah(item.item_harga)}</td>
+        <td class="text-center">${item.item_qty}</td>
+        <td class="text-end">${formatRupiah(total)}</td>
+      </tr>
+    `;
+      $(row).insertBefore(tbody.find("tr:last"));
+    });
+
+    // Isi Grand Total
+    tbody.find("tr:last td:last").html(`<strong>${formatRupiah(grandTotal)}</strong>`);
+
+    $('#btnSavePDF').prop('disabled', false).removeClass('placeholder');
+    showLoadingScreen();
+
+    // Klik Simpan PDF
+    $("#btnSavePDF").click(async function () {
+      const element = document.querySelector(".printableArea");
+      const rabDataRaw = localStorage.getItem("rabDetailData");
+      if (!rabDataRaw) {
+        Swal.fire("Data kosong", "Silakan isi data terlebih dahulu.", "warning");
+        return;
+      }
+
+      const rabData = JSON.parse(rabDataRaw);
+      const today = new Date().toISOString().split("T")[0];
+
+      const payload = rabData.items.map((item, index) => ({
+        uid_rab: Date.now() + index,
+        uid_laporan: rabData.dt.laporan || "",
+        no_rab: "RAB" + Date.now(),
+        tanggal_rab: today,
+        item_nama: item.item_nama || "",
+        item_qty: item.item_qty || "",
+        item_satuan: item.item_satuan || "",
+        item_harga: item.item_harga || "",
+        item_total: item.item_total || "",
+        keterangan: item.item_jenis || "",
+        status_rab: "OPEN",
+        constomer: rabData.dt.constomer || "",
+        alamat: rabData.dt.alamat || "",
+        no_rangka: rabData.dt.no_rangka || "",
+        plat_kr: rabData.dt.plat_kr || "",
+        odo_meter: rabData.dt.odo_meter || "",
+        warna_tahun: rabData.dt.warna_tahun || "",
+        deleted: false
+      }));
+
+      Swal.fire({ title: "Menyimpan data...", allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+      google.script.run
+        .withSuccessHandler(() => {
+          Swal.close();
+          html2pdf().set({
+            margin: 5,
+            filename: 'permintaan-barang.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 1.5, useCORS: true },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+          }).from(element).save();
+
+          ActiveMenu('app_rab');
+        })
+        .withFailureHandler((err) => {
+          Swal.fire("Gagal", err.message || "Gagal menyimpan data ke spreadsheet.", "error");
+        })
+        .saveRABDetailToSheet(payload);
+    });
+  });
+
+  /**
+   * Mengubah angka menjadi format rupiah Indonesia.
+   *
+   * @function
+   * @param {number|string} angka - Nilai numerik yang akan diformat.
+   * @returns {string} Format currency IDR (misalnya: "Rp123.456,00").
+   */
+  function formatRupiah(angka) {
+    return new Intl.NumberFormat("id-ID", {
+      style: "currency",
+      currency: "IDR"
+    }).format(angka || 0);
+  }
+
+</script>

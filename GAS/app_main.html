@@ -1,0 +1,136 @@
+<div class="row text-center g-3 placeholder-grow">
+  <div class="col-sm-3 col-md-4 col-6 menu-public">
+    <button class="card-button placeholder" id="app_laporan" onclick="ActiveMenu($(this).attr('id'))">
+      <div class="card shadow-sm p-3">
+        <span id="jml_laporan" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">#</span>
+        <i class="fa-solid fa-file-contract fa-3x placeholder" style="color: #0d6efd"></i>
+        <div class="placeholder">Laporan</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6 menu-gsais menu-izusu">
+    <button class="card-button placeholder" id="app_rab" onclick="ActiveMenu($(this).attr('id'))">
+      <div class="card shadow-sm p-3">
+        <span id="jml_rab" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">#</span>
+        <i class="fa-solid fa-file-invoice-dollar fa-3x placeholder" style="color: #0d6efd"></i>
+        <div class="placeholder">RAB Perbaikan</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6 menu-gsais">
+    <button class="card-button placeholder" id="app_spk" onclick="ActiveMenu($(this).attr('id'))">
+      <div class="card shadow-sm p-3">
+        <span id="jml_spk" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">#</span>
+        <i class="fa-solid fa-file-invoice fa-3x placeholder" style="color: #0d6efd"></i>
+        <div class="placeholder">SPK Pekerjaan</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6 menu-gsais">
+    <button class="card-button placeholder" id="" onclick="undercontruction($(this).attr('id'))">
+      <div class="card shadow-sm p-3">
+        <span id="jml_ba" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">#</span>
+        <i class="fa-solid fa-file-signature fa-3x placeholder" style="color: #0d6efd"></i>
+        <div class="placeholder">BA Pekerjaan</div>
+      </div>
+    </button>
+  </div>
+</div>
+<div class="row text-center g-3 mt-3 placeholder-grow">
+  <div class="col-sm-3 col-md-4 col-6 menu-users menu-gsais">
+    <button class="card-button placeholder" id="app_usermanager" onclick="ActiveMenu($(this).attr('id'))">
+      <div class="card shadow-sm p-3">
+        <i class="fa-solid fa-users-gear fa-3x placeholder" style="color: #0d6efd"></i>
+        <div class="placeholder">User Manager</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6 menu-izusu">
+    <button class="card-button placeholder" id="app_harsat" onclick="ActiveMenu($(this).attr('id'))">
+      <div class="card shadow-sm p-3">
+        <i class="fa-solid fa-money-check-dollar fa-3x placeholder" style="color: #0d6efd"></i>
+        <div class="placeholder">Harga Satuan</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6 menu-public">
+    <button class="card-button placeholder" id="" onclick="undercontruction($(this).attr('id'))">
+      <div class="card shadow-sm p-3">
+        <i class="fa-solid fa-car-rear fa-3x placeholder"></i>
+        <div class="placeholder">Kendaraan</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6 menu-public">
+    <button class="card-button placeholder" id="" onclick="undercontruction($(this).attr('id'))">
+      <div class="card shadow-sm p-3">
+        <i class="fa-solid fa-chart-line fa-3x placeholder" style="color: green"></i>
+        <div class="placeholder">Analitic</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6 menu-public">
+    <button class="card-button placeholder" id="" onclick="Logout()">
+      <div class="card shadow-sm p-3">
+        <i class="fa-solid fa-power-off fa-3x placeholder" style="color: #dc3545"></i>
+        <div class="placeholder">Logout</div>
+      </div>
+    </button>
+  </div>
+
+  <!-- <div class="col-sm-3 col-md-4 col-6">
+    <button class="card-button" onclick="menuAction('Dashboard')">
+      <div class="card shadow-sm p-3">
+        <i class="fas fa-database card-icon"></i>
+        <div>Data</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6">
+    <button class="card-button" onclick="menuAction('Dashboard2')">
+      <div class="card shadow-sm p-3">
+        <i class="fas fa-edit card-icon"></i>
+        <div>Lapor</div>
+      </div>
+    </button>
+  </div>
+  <div class="col-sm-3 col-md-4 col-6">
+    <button class="card-button" onclick="menuAction('Dashboard3')">
+      <div class="card shadow-sm p-3">
+        <i class="fas fa-file-pdf card-icon"></i>
+        <div>Cetak</div>
+      </div>
+    </button>
+  </div> -->
+</div>
+
+<script type="text/javascript">
+  /**
+   * Menampilkan elemen navigasi, memastikan UID pengguna aktif,
+   * dan mengambil data ringkasan laporan dari server menggunakan Google Apps Script.
+   *
+   * Jika data "Open" tersedia, maka akan ditampilkan pada elemen #jml_laporan.
+   * Elemen placeholder di #main-content akan dihapus setelah data diterima.
+   *
+   * @function (anonymous)
+   * @param {object} auth - Objek autentikasi pengguna saat ini (dikirim ke ensureUserUID).
+   * @returns {void}
+   */
+  $(".navbar-custom").show();
+  ensureUserUID(auth);
+
+  google.script.run
+    .withSuccessHandler(function (data) {
+      if (!data || data.length === 0) {
+        $("#jml_laporan").html("");
+        $("#jml_rab").html("");
+        $("#jml_spk").html("");
+        return;
+      }
+      data.laporan["Open"] > 0 ? $("#jml_laporan").html(data.laporan["Open"]) : $("#jml_laporan").html("");
+      data.rab["Open"] > 0 ? $("#jml_rab").html(data.rab["Open"]) : $("#jml_rab").html("");
+      data.spk["Open"] > 0 ? $("#jml_spk").html(data.spk["Open"]) : $("#jml_spk").html("");
+      $("#main-content .placeholder").removeClass("placeholder");
+    })
+    .getResumeData();
+</script>

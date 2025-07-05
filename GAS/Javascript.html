@@ -1,0 +1,538 @@
+<script type="text/javascript">
+  console.warn("text/javascript");
+  let Macro_User = "AKfycbw7qH1QDLggRzvQnKkFEVGTz6eQrlY481LWe3bjs31im2pK_McNrdWwsIu8Xf7C6K0H";
+  let ᗩrisՈurᗰahendra = "U2FsdGVkX1+vWwcA7uvOlHwMnggf/Cswg4yThdtRmGLk3VZtphIDG3JpOckEknjB";
+  const AES_KEY = ᗩrisՈurᗰahendra; // Simpan ini dengan aman
+
+  let mode = "local";
+  const macro_dev = "AKfycbxVj657jqQZ94d6QyPUY1Ev3LKWBiHojxQ4_9XJrbM";
+  const macro_api = "AKfycbw7qH1QDLggRzvQnKkFEVGTz6eQrlY481LWe3bjs31im2pK_McNrdWwsIu8Xf7C6K0H";
+  const code_build = "Productions"; // Development || Productions
+  let apiKey = "AIzaSyDFzRyu-CVrODAJH4oCf17aommCO9DBr18";
+  let spreadsheetId = "1RWmQc_V-VlVxD8bV6WAJM2mzeXzq42yizzCc502DI3Is";
+  let delay = 5000;
+  let userRoles, table, data_harsat, data_laporan, data_rab, dataView, data_vehicles;
+
+  /** @type {Object|null} currentLaporanData - Data laporan saat ini yang digunakan untuk membandingkan perubahan. */
+  let currentLaporanData = {}; // Diset saat modal dibuka untuk edit
+  
+  /** @type {Array<Object>} */
+  let laporanData = [];
+  let originalInfoSPK = [];
+
+  const allOptions = ["Mobil Service on Site", "Penggantian Spare Part", "Perbaikan ke Bengkel Rekanan", "Dibawa ke TRAC & Penggantian Unit"];
+
+  const maxImages = 3;
+  const maxWidth = 1280;
+  const maxHeight = 960;
+
+  let modalAddClass = ["menu-public", "menu-izusu", "menu-gsais"];
+
+  /**
+   * Mencegah pengguna menavigasi kembali (back) menggunakan tombol "Back" pada browser.
+   *
+   * Menambahkan entri ke riwayat (history) browser dan memblokir aksi kembali
+   * dengan cara mendorong kembali state saat ini setiap kali event `popstate` terjadi.
+   *
+   * @function blockBackButton
+   * @returns {void}
+   */
+  function blockBackButton() {
+    history.pushState(null, document.title, location.href);
+    window.addEventListener("popstate", function (event) {
+      history.pushState(null, document.title, location.href);
+    });
+  }
+
+  /**
+   * Fungsi untuk menampilkan layar pemuatan
+   * @param {string} text - Teks yang akan ditampilkan di layar pemuatan
+   */
+  function showLoadingScreen(text) {
+    if (text == null) {
+      $("#loadingOverlay").fadeOut();
+    } else {
+      $("#loadingText").html('<div class="text-center">' + text + "</div");
+      $("#loadingOverlay").fadeIn();
+    }
+
+    $("*[onclick=\"undercontruction($(this).attr('id'))\"]").each(function () {
+      const $this = $(this);
+      const $childCard = $this.find(".card.shadow-sm.p-3");
+      if ($childCard.length) {
+        $childCard.attr("style", "background-color: red !important;");
+      } else {
+        $this.attr("style", "color: red !important;");
+      }
+    });
+  }
+
+  /**
+   * Melakukan sanitasi pada input untuk mencegah serangan XSS (Cross-Site Scripting).
+   * Mengganti karakter khusus dengan entitas HTML yang aman.
+   *
+   * @function sanitizeInput
+   * @param {string} input - Teks input yang akan disanitasi.
+   * @returns {string} - Teks yang sudah disanitasi.
+   */
+  function sanitizeInput(input) {
+    return input
+      .replace(/&/g, "&amp;") // Mengganti & dengan &amp;
+      .replace(/</g, "&lt;") // Mengganti < dengan &lt;
+      .replace(/>/g, "&gt;") // Mengganti > dengan &gt;
+      .replace(/"/g, "&quot;") // Mengganti " dengan &quot;
+      .replace(/'/g, "&#039;") // Mengganti ' dengan &#039;
+      .replace(/`/g, "&#096;"); // Mengganti ` dengan &#096;
+  }
+
+  /**
+   * Handles user login by validating credentials and storing user data
+   * @param {string} username - User's username
+   * @param {string} password - User's password
+   */
+  function Login(username, password) {
+    // Validate inputs
+    if (!username || !password) {
+      showError("Username and password are required");
+      return;
+    }
+
+    showLoadingScreen("Authenticating...");
+
+    try {
+      // Sanitize inputs
+      const sanitizedUsername = sanitizeInput(username);
+      const sanitizedPassword = sanitizeInput(password);
+
+      // Build API URL
+      const mode = code_build === "Development" ? "dev" : "exec";
+      const macro = code_build === "Development" ? macro_dev : macro_api;
+      const url = `https://script.google.com/macros/s/${macro}/${mode}?mode=akses&username=${sanitizedUsername}&post=getpass`;
+
+      // API request
+      $.ajax({
+        url: url,
+        type: "GET",
+        dataType: "json",
+        timeout: 10000, // 10 seconds timeout
+        success: handleLoginResponse.bind(null, sanitizedPassword),
+        error: handleLoginError
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      showError("An unexpected error occurred");
+      showLoadingScreen();
+    }
+  }
+
+  /**
+   * Handles successful login response
+   * @param {string} enteredPassword - Password entered by user
+   * @param {object} response - API response
+   */
+  function handleLoginResponse(enteredPassword, response) {
+    // console.log("API response:", response);
+
+    if (response.status === "error") {
+      showError("Invalid credentials. Please check your username and password");
+      return;
+    }
+
+    if (response.status === "success") {
+      const userData = response.data[0];
+      const decryptedPassword = decryptString(userData[2], ᗩrisՈurᗰahendra);
+
+      if (enteredPassword !== decryptedPassword) {
+        showError("Invalid password");
+        return;
+      }
+      userprofile = [userData[0], decryptString(userData[1], ᗩrisՈurᗰahendra), userData[2], decryptString(userData[3], ᗩrisՈurᗰahendra), decryptString(userData[4], ᗩrisՈurᗰahendra), decryptString(userData[5], ᗩrisՈurᗰahendra), decryptString(userData[6], ᗩrisՈurᗰahendra), userData[7]];
+      // console.log(userprofile)
+      // Store user data
+      storeUserData(userprofile, response.data[1]);
+
+      // Update UI
+      updateUIAfterLogin(userprofile);
+      localStorage.setItem("log", "login");
+
+      // Ensure auth
+      ensureUserUID(auth);
+    }
+
+    showLoadingScreen();
+  }
+
+  /**
+   * Stores user data in localStorage
+   * @param {array} userData - Main user data array
+   * @param {array|null} additionalData - Additional user data
+   */
+  function storeUserData(userData, clean = null) {
+    viewLog && console.warn(userData);
+    const storageItems = {
+      user: new Date().getTime(),
+      user_uid: userData[0] || "",
+      user_name: userData[1] || "",
+      user_passkey: userData[2] || "",
+      user_fullname: userData[3] || "",
+      user_perusahaan: userData[4] || "",
+      user_jabatan: userData[5] || "",
+      user_role: JSON.parse(userData[6]) || ""
+    };
+    userRoles = JSON.parse(userData[6]);
+    // console.log(userRoles)
+
+    // Store basic user data
+    Object.entries(storageItems).forEach(([key, value]) => {
+      clean ? localStorage.setItem(key, null) : localStorage.setItem(key, value);
+    });
+  }
+
+  /**
+   * Updates UI after successful login
+   * @param {array} userData - User data array
+   */
+  function updateUIAfterLogin(userData) {
+    Swal.fire({
+      icon: "success",
+      title: "Login Successful",
+      text: "Welcome back!",
+      timer: 3000
+    });
+    ActiveMenu("app_main");
+  }
+
+  /**
+   * Handles login errors
+   * @param {object} xhr - XMLHttpRequest object
+   * @param {string} status - Error status
+   * @param {string} error - Error message
+   */
+  function handleLoginError(xhr, status, error) {
+    console.error("Login failed:", status, error);
+
+    let errorMessage = "Network error occurred";
+    if (xhr.status === 0) {
+      errorMessage = "Cannot connect to server";
+    } else if (xhr.status === 404) {
+      errorMessage = "Requested service not found";
+    } else if (xhr.status >= 500) {
+      errorMessage = "Server error occurred";
+    }
+
+    showError(errorMessage);
+    showLoadingScreen();
+  }
+
+  /**
+   * Shows error message
+   * @param {string} message - Error message
+   */
+  function showError(message) {
+    Swal.fire({
+      icon: "error",
+      title: "Login Failed",
+      html: message
+    });
+  }
+
+  /**
+   * Fungsi untuk melakukan proses logout pengguna.
+   * Fungsi ini membersihkan data pengguna dari `localStorage`,
+   * menyembunyikan elemen menu yang terkait dengan pengguna,
+   * dan mengembalikan aplikasi ke tampilan login.
+   */
+  function Logout() {
+    // Menampilkan layar loading dengan pesan "Logout ..."
+    showLoadingScreen("Logout ...");
+
+    // Membersihkan data pengguna dari localStorage
+    localStorage.setItem("user", ""); // Kosongkan data username
+    localStorage.setItem("user_uid", ""); // Kosongkan ID pengguna
+    localStorage.setItem("user_name", ""); // Kosongkan nama pengguna
+    localStorage.setItem("user_passkey", ""); // Kosongkan password pengguna
+    localStorage.setItem("user_fullname", ""); // Kosongkan nama lengkap pengguna
+
+    localStorage.setItem("user_vendor", "");
+    localStorage.setItem("user_pekerjaan", "");
+    localStorage.setItem("user_jabatan", "");
+    localStorage.setItem("log", "logout");
+
+    // Panggil fungsi auth untuk mengatur ulang status autentikasi
+    // Pastikan user_uid tersedia sebelum menjalankan auth()
+    ensureUserUID(auth);
+
+    // Menyembunyikan layar loading
+    showLoadingScreen();
+  }
+
+  /**
+   * Mengenkripsi pesan menggunakan AES dan secret key.
+   *
+   * @param {string} message - Pesan yang akan dienkripsi.
+   * @param {string} secretKey - Kunci rahasia untuk enkripsi.
+   * @returns {string} Hasil enkripsi dalam format string.
+   */
+  function encryptString(message, secretKey) {
+    return CryptoJS.AES.encrypt(message, secretKey).toString();
+  }
+
+  /**
+   * Mendekripsi pesan terenkripsi menggunakan AES dan secret key.
+   *
+   * @param {string} encryptedMessage - Pesan terenkripsi.
+   * @param {string} secretKey - Kunci rahasia untuk dekripsi.
+   * @returns {string} Pesan yang didekripsi.
+   */
+  function decryptString(encryptedMessage, secretKey) {
+    var bytes = CryptoJS.AES.decrypt(encryptedMessage, secretKey);
+    return bytes.toString(CryptoJS.enc.Utf8);
+  }
+
+  /**
+   * Mengenkripsi nilai string atau angka menggunakan algoritma AES.
+   *
+   * Jika nilai bertipe angka, akan dikonversi terlebih dahulu menjadi string.
+   *
+   * @function encryptValue
+   * @param {string|number} value - Nilai yang akan dienkripsi.
+   * @returns {string} - Teks terenkripsi dalam format Base64.
+   */
+  function encryptValue(value) {
+    value = typeof value === "number" ? value.toString() : value;
+    return CryptoJS.AES.encrypt(value, AES_KEY).toString();
+  }
+
+  /**
+   * Mendekripsi teks terenkripsi menggunakan algoritma AES.
+   *
+   * @function decryptValue
+   * @param {string} cipherText - Teks terenkripsi dalam format Base64.
+   * @returns {string} - Nilai asli yang telah didekripsi.
+   */
+  function decryptValue(cipherText) {
+    return CryptoJS.AES.decrypt(cipherText, AES_KEY).toString(CryptoJS.enc.Utf8);
+  }
+
+  /**
+   * Memastikan user_uid tersedia sebelum melakukan autentikasi pengguna.
+   * Jika tidak ada, akan muncul pesan terus menerus hingga user_uid tersedia.
+   *
+   * @function ensureUserUID
+   * @param {Function} callback - Fungsi yang akan dijalankan setelah user_uid tersedia
+   * @returns {void}
+   */
+  function ensureUserUID(callback) {
+    const roleMenuMap = ["menu-person", "menu-admin", "menu-users", "menu-izusu", "menu-public", "menu-gsais"];
+
+    // Ambil dan parse dari localStorage
+    userRoles = [];
+
+    try {
+      const rawRoles = localStorage.user_role || "[]";
+      // userRoles = JSON.parse(rawRoles);
+      userRoles = rawRoles.split(",");
+    } catch (e) {
+      console.error("Gagal parse user_role:", e);
+    }
+
+    // Sembunyikan semua
+    roleMenuMap.forEach(key => {
+      $(`.${key}`).hide();
+      // console.error('ensureUserUID hide', key)
+    });
+
+    // console.log('userRoles', userRoles)
+    // Tampilkan yang sesuai role
+    if (userRoles.includes("menu-admin")) {
+      roleMenuMap.forEach(key => {
+        $(`.${key}`).show();
+      });
+    } else {
+      userRoles.forEach(key => {
+        $(`.${key}`).show();
+        // console.error('ensureUserUID show', key)
+      });
+    }
+
+    const checkInterval = setInterval(() => {
+      const userUID = localStorage.getItem("user_uid");
+      page = localStorage.getItem("#content_page");
+      const logStatus = localStorage.getItem("log");
+
+      if (!userUID && !["app_login", "app_welcome", ""].includes(page)) {
+        $(".navbar-custom").hide();
+        ActiveMenu("app_login");
+      } else {
+        clearInterval(checkInterval); // Hentikan interval jika UID sudah ada
+        callback(); // Jalankan fungsi autentikasi setelah UID tersedia
+      }
+      if (logStatus == "logout") {
+        // console.log("User logged out");
+        clearInterval(checkInterval);
+        return;
+      }
+    }, 3000); // Cek setiap 3 detik
+    // console.warn('ensureUserUID')
+  }
+
+  /**
+   * Melakukan autentikasi pengguna dan menampilkan menu sesuai dengan akses yang tersimpan di localStorage.
+   * Memverifikasi validitas sesi login dan menyembunyikan menu yang tidak diizinkan.
+   *
+   * @function auth
+   * @returns {void}
+   */
+  function auth() {
+    // Mendapatkan data pengguna dari localStorage
+    user_uid = localStorage.getItem("user_uid");
+    user_name = localStorage.getItem("user_name");
+    user_passkey = localStorage.getItem("user_passkey");
+    user_fullname = localStorage.getItem("user_fullname");
+
+    // Mengisi input dengan data pengguna
+    $("#inputnama_user").val(user_name);
+    $("#inputnama_personil").val(user_fullname);
+
+    // // Pemetaan menu dan status akses pengguna dari localStorage
+    // const roleMenuMap = ["menu-person", "menu-admin", "menu-users", "menu-izusu", "menu-public", "menu-gsais"];
+
+    // // Ambil dan parse dari localStorage
+    // userRoles = [];
+
+    // try {
+    //   const rawRoles = localStorage.user_role || "[]";
+    //   userRoles = JSON.parse(rawRoles);
+    // } catch (e) {
+    //   console.error("Gagal parse user_role:", e);
+    // }
+    // // Sembunyikan semua
+    // roleMenuMap.forEach(key => {
+    //   $(`.${key}`).hide();
+    //     console.warn('auth hide', key)
+    // });
+
+    // console.log('userRoles', userRoles)
+    // Autentikasi berdasarkan waktu login (validasi sesi)
+    if (
+      new Date().getTime() - localStorage.getItem("user") >
+      1000 * 60 * 60 * 24 // Periksa apakah sesi login masih dalam 24 jam
+    ) {
+      if (localStorage.getItem("log") != "logout") Logout();
+      return;
+    }
+    return;
+  }
+
+  /**
+   * Mengonversi string tanggal menjadi format "dd/mm/yyyy".
+   *
+   * Jika input tidak valid atau kosong, akan mengembalikan string asli atau kosong.
+   *
+   * @function formatDateToDDMMYYYY
+   * @param {string} dateString - Tanggal dalam format string (bisa ISO, atau format lain yang dikenali oleh `Date`).
+   * @returns {string} - Tanggal dalam format "dd/mm/yyyy" atau string asli jika tidak valid.
+   */
+  function formatDateToDDMMYYYY(dateString) {
+    if (!dateString) return "";
+
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString; // Jika bukan tanggal valid, kembalikan original string
+
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Bulan dimulai dari 0
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  }
+function formatDateToYYYYMMDD(dateString, sep = "") {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return dateString; // Jika bukan tanggal valid, kembalikan string asli
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const year = date.getFullYear();
+
+  return [year, month, day].join(sep);
+}
+
+function formatDateID(tanggalStr) {
+  const bulanIndo = [
+    "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+    "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+  ];
+
+  const tanggal = new Date(tanggalStr);
+  if (isNaN(tanggal)) return ""; // validasi jika bukan tanggal
+
+  const hari = String(tanggal.getDate()).padStart(2, '0');
+  const bulan = bulanIndo[tanggal.getMonth()];
+  const tahun = tanggal.getFullYear();
+
+  return `${hari} ${bulan} ${tahun}`;
+}
+
+  /**
+   * Mengonversi berbagai format URL Google Drive menjadi link thumbnail gambar.
+   *
+   * Mendukung format:
+   * - https://drive.google.com/file/d/FILE_ID/view
+   * - https://drive.google.com/open?id=FILE_ID
+   * - https://drive.google.com/uc?id=FILE_ID
+   * - Hanya ID Google Drive
+   *
+   * @function convertGoogleDriveLinkToImgTag
+   * @param {string} url - URL Google Drive atau ID file.
+   * @returns {string} - URL thumbnail dari file gambar Google Drive, atau string kosong jika tidak valid.
+   */
+  function convertGoogleDriveLinkToImgTag(url) {
+    if (!url) return "";
+
+    let fileId = "";
+
+    // Tangani berbagai format link Google Drive
+    let match1 = url.match(/\/file\/d\/([^/]+)\//);
+    let match2 = url.match(/open\?id=([^&]+)/);
+    let match3 = url.match(/uc\?id=([^&]+)/);
+    let match4 = url.match(/^[a-zA-Z0-9_-]{25,}$/);
+
+    if (match1) {
+      fileId = match1[1];
+    } else if (match2) {
+      fileId = match2[1];
+    } else if (match3) {
+      fileId = match3[1];
+    } else if (match4) {
+      fileId = match4[0];
+    } else {
+      return ""; // format tidak dikenali
+    }
+
+    const imgUrl = `https://drive.google.com/thumbnail?id=${fileId}`;
+    return `${imgUrl}`;
+  }
+
+  function formatFilenameFromString(input) {
+  if (!input) return "";
+
+  // Pisahkan tanggal dan sisanya
+  const [tanggalStr, ...restParts] = input.split(' ');
+  const dateObj = new Date(tanggalStr);
+
+  if (isNaN(dateObj)) return input; // Jika tanggal tidak valid, kembalikan original
+
+  // Format tanggal jadi YYYYMMDD
+  const yyyy = dateObj.getFullYear();
+  const mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const dd = String(dateObj.getDate()).padStart(2, '0');
+  const tanggalFormatted = `${yyyy}${mm}${dd}`;
+
+  // Gabung kembali sisa bagian dan ubah format kode
+  const sisa = restParts.join(' ').replace(/\//g, '_');
+
+  return `${tanggalFormatted} ${sisa}`.trim();
+}
+
+</script>
