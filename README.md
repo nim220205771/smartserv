@@ -1,6 +1,18 @@
-# 🚗 Sistem Informasi Maintenance Kendaraan Operasional
+# 🚗 SmartServ - Sistem Informasi Maintenance Kendaraan Operasional
 
 Sistem ini merupakan prototipe sistem informasi berbasis web menggunakan **Google Apps Script (GAS)** dan **Google Spreadsheet** sebagai back-end, dirancang untuk mengelola perawatan kendaraan operasional pada sebuah perusahaan. Sistem mencakup pelaporan kerusakan, penyusunan RAB perbaikan, penerbitan SPK, dan pelacakan progres maintenance.
+
+---
+
+## 🧩 Fitur Aplikasi
+
+- 🔧 **Pelaporan & RAB**: Form online lengkap untuk input laporan kerusakan dan buat RAB berdasarkan `harsat`
+- 📎 **Dokumentasi**: Unggah & simpan bukti ke Google Drive (kerusakan, perbaikan, SPK, BA)
+- 📋 **Status Otomatis**: Sistem cerdas menentukan status berdasarkan kelengkapan
+- 👥 **Manajemen User**: Tambah user dengan akses terbatas sesuai menu (public, admin, izusu, dll)
+- 📊 **Analitik**: Dashboard & Sheet `analytics_maintenance` untuk insight dan evaluasi
+
+---
 
 ## ✅ Fitur Utama
 1. ✅ User Authentication
@@ -13,13 +25,13 @@ Sistem ini merupakan prototipe sistem informasi berbasis web menggunakan **Googl
 8. ✅ Penerbitan SPK Pekerjaan
 9. ❌ Berita Acara Perbaikan (On Progress)
 
+---
+
 ## 👥 Default Akun
 username: admin
 passkey : admin
 
-markdown
-Copy
-Edit
+---
 
 ## 🛠️ Teknologi & Library
 - Google Apps Script (GAS)
@@ -28,11 +40,15 @@ Edit
 - SweetAlert2, FontAwesome
 - Enkripsi AES: [`cCryptoGS v4`](https://script.google.com/macros/library/d/MSJnPeIon6nzdLewGV60xWqi_d-phDA33)
 
+---
+
 ## 🔐 Keamanan & Variabel Utama
 - Kunci Enkripsi: `ᗩrisՈurᗰahendra`
 - `spreadsheetId`: ID Spreadsheet utama
 - `folderIMG`: ID folder Drive untuk menyimpan gambar (shared)
 - `folderPDF`: ID folder Drive untuk menyimpan file PDF (shared)
+
+---
 
 ## 🧩 Struktur Spreadsheet
 
@@ -85,6 +101,25 @@ Edit
 #### `resume`
 - Menyediakan hasil `COUNTIF` dan rekap analisis status dokumen
 
+---
+
+## 🚀 Deploy Aplikasi
+
+1. **Salin spreadsheet**  
+   Gunakan [template spreadsheet](https://docs.google.com/spreadsheets/d/1W45voTxTFQO3JpOsN0rFJ8bmVUpx8HCW_be6eMYsd_0/edit#gid=0)
+
+2. **Siapkan Google Apps Script**
+   - Buat project baru di [Apps Script](https://script.google.com)
+   - Upload semua file: `Code.gs`, `HTML`, `JS`, dll
+   - Sambungkan Spreadsheet ID & Folder Drive ID
+
+3. **Deploy sebagai Web App**
+   - Pilih **Deploy > Web App**
+   - Atur siapa saja yang bisa mengakses
+   - Salin URL Web App sebagai link akses pengguna
+
+---
+
 ## 📊 Evaluasi & Pengujian
 - Fitur berjalan tanpa error (✅ validasi input, ✅ dependensi)
 - Load time rata-rata: < 3 detik (cached data, async)
@@ -95,9 +130,18 @@ Edit
   - 🧰 Filter berdasarkan periode dan jenis kendaraan
 
 ## 📁 Panduan Template Spreadsheet
-Gunakan template berikut sebagai basis struktur:
-🔗 [Template Spreadsheet](https://docs.google.com/spreadsheets/d/1W45voTxTFQO3JpOsN0rFJ8bmVUpx8HCW_be6eMYsd_0/edit?usp=sharing)  
-☑️ Salin ke akun Anda → *File > Buat Salinan*
+📌 Gunakan template berikut untuk memulai:  
+🔗 [Template Spreadsheet](https://docs.google.com/spreadsheets/d/1W45voTxTFQO3JpOsN0rFJ8bmVUpx8HCW_be6eMYsd_0/edit#gid=0)  
+☑️ Salin spreadsheet ke akun Google Drive Anda melalui `File > Buat Salinan`.
+
+---
+
+## 💡 Tips Teknis
+
+- Gunakan `google.script.run.getHarsat()` untuk mengisi data harga otomatis saat memilih item
+- Gunakan `UID + Timestamp` untuk membuat ID unik (`UID123456`)
+- Gunakan `SweetAlert2` untuk UX responsif saat upload gambar
+- DataTables digunakan untuk menampilkan laporan & RAB secara interaktif
 
 ---
 
